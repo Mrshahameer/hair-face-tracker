@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js"></script>
 <meta name="theme-color" content="#15314d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -339,7 +339,7 @@ details summary{cursor:pointer;font-weight:600}
     <div id="cSetup" style="display:grid;gap:12px">
       <div class="form">
         <label>Supabase project URL<input id="cUrl" placeholder="https://abcd1234.supabase.co" autocomplete="off"></label>
-        <label>Anon public key<input id="cKey" placeholder="eyJhbGciOi..." autocomplete="off"></label>
+        <label>Publishable key<input id="cKey" placeholder="sb_publishable_..." autocomplete="off"></label>
       </div>
       <div class="actions"><button class="btn primary" id="cSave">Save connection</button></div>
       <details><summary>First time? Run this SQL once in Supabase</summary>
@@ -736,11 +736,17 @@ $("restoreFile").addEventListener("change", e=>{
   const f = e.target.files && e.target.files[0]; if(!f) return;
   const r = new FileReader(); r.onload = ()=>{ $("restoreBox").value = String(r.result); $("restoreMsg").textContent = "File loaded. Press Restore."; }; r.readAsText(f);
 });
+function keyProblem(k){
+  if(/^sb_secret_/i.test(k)) return "That is the SECRET key. Never use it here. Paste the publishable key.";
+  if(/^sb_publishable_/i.test(k)) return k.length<30 ? "That key looks cut off. Copy the full publishable key." : "";
+  if(/^eyJ/.test(k)){ try{ const p=JSON.parse(atob(k.split(".")[1].replace(/-/g,"+").replace(/_/g,"/"))); if(p.role==="service_role") return "That is the service_role key. Never use it here. Paste the anon key."; }catch(e){} return k.length<40 ? "That key looks too short." : ""; }
+  return "Paste the publishable key. It starts with sb_publishable_";
+}
 /* ---------- cloud sync (Supabase) ---------- */
 const APP = "hair-face";
 const CLOUD_KEY = "scalplog.cloud";
 const SUPABASE_URL = "";   // optional: paste your project URL here
-const SUPABASE_ANON = "";  // optional: paste your anon key here
+const SUPABASE_ANON = "sb_publishable_fivCuW6W7Jwmg4iKERrZxw_mYKPrCfS";  // publishable key, safe to be public
 let sb = null, sbUser = null, lastPull = 0;
 function cloudCfg(){ try{ const c = JSON.parse(localStorage.getItem(CLOUD_KEY)||"{}"); return {url:c.url||SUPABASE_URL, key:c.key||SUPABASE_ANON}; }catch(e){ return {url:SUPABASE_URL, key:SUPABASE_ANON}; } }
 function cloudMsg(t){ $("cMsg").textContent = t; }
@@ -800,7 +806,7 @@ async function cloudFlush(){
 $("cSave").onclick = ()=>{
   const url = $("cUrl").value.trim().replace(/\/+$/,""), key = $("cKey").value.trim();
   if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){ cloudMsg("The URL should look like https://abcd1234.supabase.co"); return; }
-  if(key.length<40){ cloudMsg("That key looks too short. Copy the full anon public key."); return; }
+  const kp = keyProblem(key); if(kp){ cloudMsg(kp); return; }
   try{ localStorage.setItem(CLOUD_KEY, JSON.stringify({url, key})); }catch(e){}
   location.reload();
 };
