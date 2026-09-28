@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <meta name="theme-color" content="#15314d">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +19,7 @@
   --hero-a:#15314d; --hero-b:#1d6b73; --on-hero:#f2f7f8; --on-hero-muted:#b9d3d6; --hero-bar:#f3a57f;
   --accent:#c35f36; --accent-soft:#f8e6dc; --teal:#1d7078; --teal-soft:#d9eeef;
   --face:#7155c4; --face-soft:#ece6fa; --supp:#2c8a58; --supp-soft:#dcf1e4; --photo:#2d68c9; --photo-soft:#dfe9fa;
-  --ok:#1d7078; --ok-soft:#d9eeef; --warn:#b07a12; --warn-soft:#f8ecd2; --skip:#9aa2b3;
+  --ok:#1d7078; --ok-soft:#d9eeef; --warn:#b07a12; --warn-soft:#f8ecd2; --bad:#c2413b; --bad-soft:#fbe3e1; --skip:#9aa2b3;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -28,13 +29,13 @@
   --hero-a:#12304a; --hero-b:#16545c; --on-hero:#f2f7f8; --on-hero-muted:#a9c7cb; --hero-bar:#f3a57f;
   --accent:#f08e62; --accent-soft:#3b2519; --teal:#4ec1c7; --teal-soft:#133236;
   --face:#a88ef2; --face-soft:#2a2146; --supp:#5fd092; --supp-soft:#16301f; --photo:#74a7f7; --photo-soft:#1a2944;
-  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --skip:#69738a; color-scheme:dark }}
+  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --bad:#f07a72; --bad-soft:#3a1a19; --skip:#69738a; color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#0c111c; --surface:#141b2a; --ink:#e7ecf5; --muted:#8f99b0; --line:#243048;
   --hero-a:#12304a; --hero-b:#16545c; --on-hero:#f2f7f8; --on-hero-muted:#a9c7cb; --hero-bar:#f3a57f;
   --accent:#f08e62; --accent-soft:#3b2519; --teal:#4ec1c7; --teal-soft:#133236;
   --face:#a88ef2; --face-soft:#2a2146; --supp:#5fd092; --supp-soft:#16301f; --photo:#74a7f7; --photo-soft:#1a2944;
-  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --skip:#69738a; color-scheme:dark }
+  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --bad:#f07a72; --bad-soft:#3a1a19; --skip:#69738a; color-scheme:dark }
 
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:20px}
@@ -112,7 +113,21 @@ textarea{min-height:70px;resize:vertical}
 .cell.f2{background:var(--ok-soft)}
 .cell.f3{background:var(--ok);color:var(--surface)}
 .cell.f3 .m .r,.cell.f3 .m .s,.cell.f3 .m .f{color:var(--surface)}
-.cell.miss{background:transparent;border-style:dashed}
+.cell.miss{background:transparent;border-style:dashed;border-color:var(--bad)}
+.cell.lost::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--bad)}
+.stat.score{grid-column:1 / -1;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.stat.score .v{font-size:44px;line-height:1}
+.stat .v.good{color:var(--ok)} .stat .v.mid{color:var(--warn)} .stat .v.low{color:var(--bad)}
+.stat .v.neg{color:var(--bad)}
+.missed{list-style:none;margin:0;padding:0;display:grid}
+.missed li{border-top:1px solid var(--line)}
+.missed li:first-child{border-top:0}
+.missed button{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 2px;background:transparent;border:0;text-align:left}
+.missed button:hover .mt{text-decoration:underline}
+.missed .md{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.missed .mt{font-size:14px}
+.missed .mp{font-family:var(--mono);font-size:12px;color:var(--bad);font-weight:500}
+.scorechip{font-family:var(--mono);font-size:12px;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.14);color:var(--on-hero)}
 .cell.future{color:var(--muted)}
 .cell.today{outline:2px solid var(--hero-bar);outline-offset:1px}
 .cell.sel{border-color:var(--ink);border-width:2px}
@@ -161,6 +176,7 @@ details summary{cursor:pointer;font-weight:600}
       <div class="bar"><i id="barFill" style="width:2%"></i></div>
     </div>
     <div style="display:grid;gap:6px;justify-items:end">
+      <span class="scorechip" id="scoreChip">Score 100</span>
       <span class="status" id="status"><b></b><span>Saved in this browser</span></span>
       <span class="note mono" id="rangeText"></span>
     </div>
@@ -208,11 +224,17 @@ details summary{cursor:pointer;font-weight:600}
           <span><b class="mono" style="color:var(--accent)">R</b> Scalp roll</span>
           <span><b class="mono" style="color:var(--face)">F</b> Face roll</span>
           <span><b class="mono" style="color:var(--teal)">S</b> Shave</span>
+          <span><i class="sw" style="background:var(--bad);border-radius:50%;width:8px;height:8px"></i>Missed tasks</span>
         </div>
       </section>
       <section class="panel" aria-labelledby="statTitle">
-        <h2 id="statTitle">Progress so far</h2>
+        <div class="dayhead"><h2 id="statTitle">Your score</h2><span class="note">Today counts at midnight</span></div>
         <div class="stats" id="stats"></div>
+      </section>
+      <section class="panel" aria-labelledby="missTitle">
+        <div class="dayhead"><h2 id="missTitle">Missed so far</h2><span class="note" id="missCount"></span></div>
+        <ul class="missed" id="missed"></ul>
+        <p class="note">Tap a missed task to open that day. If you did it but forgot to tick, tick it there.</p>
       </section>
     </div>
   </div>
@@ -311,6 +333,55 @@ details summary{cursor:pointer;font-weight:600}
     </details>
   </section>
 
+  <section class="panel" aria-labelledby="cloudTitle">
+    <div class="dayhead"><h2 id="cloudTitle">Cloud sync</h2><span class="note" id="cMsg"></span></div>
+    <p class="note">Sign in on your phone and PC with the same account. Every tick saves to your own Supabase database.</p>
+    <div id="cSetup" style="display:grid;gap:12px">
+      <div class="form">
+        <label>Supabase project URL<input id="cUrl" placeholder="https://abcd1234.supabase.co" autocomplete="off"></label>
+        <label>Anon public key<input id="cKey" placeholder="eyJhbGciOi..." autocomplete="off"></label>
+      </div>
+      <div class="actions"><button class="btn primary" id="cSave">Save connection</button></div>
+      <details><summary>First time? Run this SQL once in Supabase</summary>
+        <div style="display:grid;gap:8px;margin-top:10px">
+          <p class="note">Supabase dashboard, SQL Editor, New query. Paste, then press Run.</p>
+          <pre id="sqlBox" style="overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;font-family:var(--mono);font-size:12px;margin:0">-- Run once in Supabase: SQL Editor &gt; New query &gt; paste &gt; Run
+create table if not exists public.tracker_days (
+  user_id    uuid not null default auth.uid() references auth.users(id) on delete cascade,
+  app        text not null,
+  day_key    text not null,
+  data       jsonb not null default &#x27;{}&#x27;::jsonb,
+  updated_at timestamptz not null default now(),
+  primary key (user_id, app, day_key)
+);
+
+alter table public.tracker_days enable row level security;
+
+drop policy if exists &quot;Own rows only&quot; on public.tracker_days;
+create policy &quot;Own rows only&quot; on public.tracker_days
+  for all to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+</pre>
+          <div class="actions"><button class="btn" id="copySql">Copy SQL</button></div>
+        </div>
+      </details>
+    </div>
+    <div id="cLogin" hidden style="display:grid;gap:12px">
+      <div class="form">
+        <label>Email<input id="cEmail" type="email" autocomplete="email"></label>
+        <label>Password<input id="cPass" type="password" autocomplete="current-password"></label>
+      </div>
+      <div class="actions"><button class="btn primary" id="cIn">Sign in</button><button class="btn" id="cUp">Create account</button></div>
+    </div>
+    <div id="cUser" hidden class="actions">
+      <span>Signed in as <b id="cWho"></b></span>
+      <button class="btn primary" id="cSyncNow">Sync now</button>
+      <button class="btn" id="cOut">Sign out</button>
+      <button class="btn" id="cEdit">Change project</button>
+    </div>
+  </section>
+
   <p class="note">This log is a tracker, not medical advice. See a dermatologist before starting finasteride.</p>
 </div>
 
@@ -334,8 +405,8 @@ function dbWrite(path, data){
   if(!db) return;
   chains[path] = (chains[path]||Promise.resolve()).then(()=>db.doc(path).set(data)).catch(()=>{});
 }
-function saveDay(key){ saveLocal(); dbWrite("days/"+key, state.days[key]||{}); }
-function saveSettings(){ saveLocal(); dbWrite("tracker/settings", state.settings); }
+function saveDay(key){ if(state.days[key]) state.days[key]._ts = Date.now(); saveLocal(); dbWrite("days/"+key, state.days[key]||{}); if(typeof cloudQueue==="function") cloudQueue(key, state.days[key]||{}); }
+function saveSettings(){ state.settings._ts = Date.now(); saveLocal(); dbWrite("tracker/settings", state.settings); if(typeof cloudQueue==="function") cloudQueue("settings", state.settings); }
 
 async function initDb(){
   try{
@@ -363,10 +434,10 @@ async function initDb(){
     }, ()=>setStatus(false));
   }catch(e){ db = null; setStatus(false); }
 }
-function setStatus(synced){
+function setStatus(synced, label){
   const el = document.getElementById("status");
   el.classList.toggle("synced", !!synced);
-  el.querySelector("span").textContent = synced ? "Saved to your account" : "Saved in this browser";
+  el.querySelector("span").textContent = label || (synced ? "Saved to your account" : "Saved in this browser");
 }
 
 /* ---------- dates ---------- */
@@ -463,6 +534,8 @@ function tasksFor(n, sch){
   if(n===ROLL_START-1) add("Night","Hair","buy","Get 70% isopropyl alcohol ready","You roll tomorrow. Any pharmacy has it.");
   return list;
 }
+const WEIGHT = { roll:10, faceRoll:6, topAM:5, topPM:5, fin:5, tablet:4, photo:4, collagen:3, ana:3, spf:3, shave:2, faceWash:2, faceAM:1, buy:1 };
+function wt(id){ return WEIGHT[id] || 2; }
 function dayScore(n, sch){
   const t = tasksFor(n, sch).filter(x=>!x.skip);
   const d = (state.days[keyOf(n)]||{}).done||{};
@@ -527,6 +600,7 @@ function render(){
     if(d>tn) cls += " future";
     else if(sc.done===0) cls += (d<tn ? " miss" : "");
     else cls += r>=1 ? " f3" : r>=.6 ? " f2" : " f1";
+    if(d<tn && sc.done<sc.total) cls += " lost";
     if(d===tn) cls += " today";
     if(d===selected) cls += " sel";
     const m = (sch.roll.has(d)?'<span class="r">R</span>':'')+(sch.face.has(d)?'<span class="f">F</span>':'')+(sch.shave.has(d)?'<span class="s">S</span>':'');
@@ -534,26 +608,38 @@ function render(){
   }
   $("cal").innerHTML = cal;
 
-  // stats
+  // score
   const upto = Math.max(0, Math.min(DAYS, tn));
-  let faceDone=0, faceDue=0, tDone=0, tTot=0, rollsDone=0, rollsDue=0, shaves=0, streak=0, irrSum=0, irrN=0;
+  let faceDone=0, faceDue=0, rollsDone=0, rollsDue=0, streak=0, earned=0, possible=0;
+  const missed = [];
   for(let d=1; d<=upto; d++){
-    const sc = dayScore(d, sch); tDone+=sc.done; tTot+=sc.total;
-    const dd = (state.days[keyOf(d)]||{});
-    if(sch.roll.has(d)){ rollsDue++; if(dd.done&&dd.done.roll) rollsDone++; }
-    if(sch.face.has(d)){ faceDue++; if(dd.done&&dd.done.faceRoll) faceDone++; }
-    if(dd.done&&dd.done.shave) shaves++;
-    if(typeof dd.irr==="number"){ irrSum+=dd.irr; irrN++; }
+    const dd = (state.days[keyOf(d)]||{}); const dn = dd.done||{};
+    tasksFor(d, sch).filter(x=>!x.skip).forEach(x=>{
+      const w = wt(x.id);
+      if(dn[x.id]){ earned+=w; possible+=w; }
+      else if(d<tn){ possible+=w; missed.push({d, t:x.t, w}); }
+    });
+    if(sch.roll.has(d)){ rollsDue++; if(dn.roll) rollsDone++; }
+    if(sch.face.has(d)){ faceDue++; if(dn.faceRoll) faceDone++; }
   }
   for(let d=upto; d>=1; d--){ const sc = dayScore(d, sch); if(sc.total && sc.done===sc.total) streak++; else if(d===upto) continue; else break; }
-  const adh = tTot ? Math.round(tDone/tTot*100) : 0;
-  const irrAvg = irrN ? ["None","Mild","Red","Painful"][Math.round(irrSum/irrN)] : "No data";
-  $("stats").innerHTML = [
-    [adh+"%","Tasks done so far"],
-    [streak+"","Full days in a row"],
-    [rollsDone+" / "+rollsDue,"Scalp rolls done"],
-    [faceDone+" / "+faceDue,"Face rolls done"]
-  ].map(s=>'<div class="stat"><span class="v">'+s[0]+'</span><span class="l">'+s[1]+'</span></div>').join("");
+  const score = possible ? Math.round(earned/possible*100) : 100;
+  const lost = possible-earned;
+  const band = score>=85 ? "good" : score>=60 ? "mid" : "low";
+  const verdict = score>=85 ? "On track" : score>=60 ? "Slipping. Tighten up" : "Too many misses. Results will suffer";
+  $("scoreChip").textContent = "Score "+score;
+  $("stats").innerHTML =
+    '<div class="stat score"><span class="v '+band+'">'+score+'<small style="font-size:.4em">/100</small></span><span class="l">'+verdict+'</span></div>'+
+    [[(lost?"-":"")+lost, "Points lost", lost?"neg":""],
+     [streak+"", "Full days in a row",""],
+     [rollsDone+" / "+rollsDue, "Scalp rolls done",""],
+     [faceDone+" / "+faceDue, "Face rolls done",""]
+    ].map(x=>'<div class="stat"><span class="v '+x[2]+'">'+x[0]+'</span><span class="l">'+x[1]+'</span></div>').join("");
+  missed.sort((a,b)=>b.d-a.d || b.w-a.w);
+  $("missCount").textContent = missed.length ? missed.length+" tasks · -"+lost+" pts" : "";
+  $("missed").innerHTML = missed.length
+    ? missed.slice(0,15).map(m=>'<li><button data-goto="'+m.d+'"><span><span class="md">Day '+m.d+' · '+fmt(dateOf(m.d))+'</span><br><span class="mt">'+esc(m.t)+'</span></span><span class="mp">-'+m.w+'</span></button></li>').join("") + (missed.length>15 ? '<li><span class="note" style="display:block;padding:8px 2px">'+(missed.length-15)+' more older misses</span></li>' : "")
+    : '<li><span class="note" style="display:block;padding:8px 2px">Nothing missed yet. Keep every day green.</span></li>';
 
   // plan
   const rolls = [...sch.roll.keys()].sort((a,b)=>a-b);
@@ -602,6 +688,7 @@ $("notes").addEventListener("input", e=>{
   clearTimeout(noteT); noteT = setTimeout(()=>saveDay(k), 700);
 });
 $("notes").addEventListener("blur", ()=>{ clearTimeout(noteT); saveDay(selKey()); });
+$("missed").addEventListener("click", e=>{ const b = e.target.closest("[data-goto]"); if(!b) return; selected = +b.dataset.goto; render(); $("dayTitle").scrollIntoView({behavior:"smooth", block:"start"}); });
 $("cal").addEventListener("click", e=>{ const c = e.target.closest("[data-day]"); if(!c) return; selected = +c.dataset.day; render(); });
 $("prevDay").onclick = ()=>{ selected = clampN(selected-1); render(); };
 $("nextDay").onclick = ()=>{ selected = clampN(selected+1); render(); };
@@ -649,7 +736,92 @@ $("restoreFile").addEventListener("change", e=>{
   const f = e.target.files && e.target.files[0]; if(!f) return;
   const r = new FileReader(); r.onload = ()=>{ $("restoreBox").value = String(r.result); $("restoreMsg").textContent = "File loaded. Press Restore."; }; r.readAsText(f);
 });
-loadLocal(); fillSettings(); render(); initDb();
+/* ---------- cloud sync (Supabase) ---------- */
+const APP = "hair-face";
+const CLOUD_KEY = "scalplog.cloud";
+const SUPABASE_URL = "";   // optional: paste your project URL here
+const SUPABASE_ANON = "";  // optional: paste your anon key here
+let sb = null, sbUser = null, lastPull = 0;
+function cloudCfg(){ try{ const c = JSON.parse(localStorage.getItem(CLOUD_KEY)||"{}"); return {url:c.url||SUPABASE_URL, key:c.key||SUPABASE_ANON}; }catch(e){ return {url:SUPABASE_URL, key:SUPABASE_ANON}; } }
+function cloudMsg(t){ $("cMsg").textContent = t; }
+function timeStr(){ const d = new Date(); return "at "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function cloudUI(){
+  const c = cloudCfg();
+  $("cSetup").hidden = !!(c.url && c.key) && !$("cSetup").dataset.force;
+  $("cLogin").hidden = !sb || !!sbUser;
+  $("cUser").hidden = !sbUser;
+  if(sbUser) $("cWho").textContent = sbUser.email || "Signed in";
+  setStatus(!!sbUser, sbUser ? "Synced to cloud" : null);
+}
+function cloudInit(){
+  const c = cloudCfg();
+  $("cUrl").value = c.url; $("cKey").value = c.key;
+  if(!c.url || !c.key){ cloudUI(); cloudMsg("Not connected. Add your Supabase details below."); return; }
+  if(!window.supabase){ cloudUI(); cloudMsg("Could not load the sync library. Check your internet."); return; }
+  try{ sb = window.supabase.createClient(c.url, c.key, {auth:{persistSession:true, autoRefreshToken:true, storageKey:"scalplog-auth"}}); }
+  catch(e){ sb = null; cloudUI(); cloudMsg("That URL or key does not look right."); return; }
+  sb.auth.getSession().then(({data})=>{ sbUser = data && data.session ? data.session.user : null; cloudUI(); if(sbUser) cloudPull(); else cloudMsg("Sign in to sync this device."); });
+  sb.auth.onAuthStateChange((_e, session)=>{ const was = sbUser; sbUser = session ? session.user : null; cloudUI(); if(sbUser && !was) cloudPull(); });
+  document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible" && sbUser && Date.now()-lastPull>20000) cloudPull(); });
+}
+function row(k, d){ return {user_id:sbUser.id, app:APP, day_key:k, data:d, updated_at:new Date().toISOString()}; }
+async function cloudPull(){
+  if(!sb || !sbUser) return;
+  lastPull = Date.now(); cloudMsg("Syncing...");
+  const {data, error} = await sb.from("tracker_days").select("day_key,data").eq("app", APP);
+  if(error){ cloudMsg("Sync failed: "+error.message+". Did you run the setup SQL?"); return; }
+  const remote = {}; (data||[]).forEach(r=>{ remote[r.day_key] = r.data || {}; });
+  const push = [];
+  const rs = remote.settings;
+  if(rs && (rs._ts||0) >= (state.settings._ts||0)) state.settings = {...DEFAULTS, ...rs};
+  else if(state.settings._ts) push.push(row("settings", state.settings));
+  const keys = new Set([...Object.keys(state.days), ...Object.keys(remote).filter(k=>k!=="settings")]);
+  keys.forEach(k=>{
+    const l = state.days[k], r = remote[k];
+    if(r && (!l || (r._ts||0) >= (l._ts||0))) state.days[k] = r;
+    else if(l) push.push(row(k, l));
+  });
+  saveLocal(); fillSettings(); render();
+  if(push.length){
+    const {error:e2} = await sb.from("tracker_days").upsert(push, {onConflict:"user_id,app,day_key"});
+    if(e2){ cloudMsg("Upload failed: "+e2.message); return; }
+  }
+  cloudMsg("Synced "+timeStr()+".");
+}
+const pending = {}; let pushT = null;
+function cloudQueue(k, d){ if(!sb || !sbUser) return; pending[k] = d; clearTimeout(pushT); pushT = setTimeout(cloudFlush, 800); }
+async function cloudFlush(){
+  const ks = Object.keys(pending); if(!ks.length || !sbUser) return;
+  const rows = ks.map(k=>row(k, pending[k])); ks.forEach(k=>delete pending[k]);
+  const {error} = await sb.from("tracker_days").upsert(rows, {onConflict:"user_id,app,day_key"});
+  if(error){ rows.forEach(r=>{ if(!pending[r.day_key]) pending[r.day_key] = r.data; }); cloudMsg("Saved here. Cloud will retry. ("+error.message+")"); pushT = setTimeout(cloudFlush, 15000); }
+  else cloudMsg("Synced "+timeStr()+".");
+}
+$("cSave").onclick = ()=>{
+  const url = $("cUrl").value.trim().replace(/\/+$/,""), key = $("cKey").value.trim();
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){ cloudMsg("The URL should look like https://abcd1234.supabase.co"); return; }
+  if(key.length<40){ cloudMsg("That key looks too short. Copy the full anon public key."); return; }
+  try{ localStorage.setItem(CLOUD_KEY, JSON.stringify({url, key})); }catch(e){}
+  location.reload();
+};
+$("cEdit").onclick = ()=>{ $("cSetup").dataset.force = "1"; $("cSetup").hidden = false; };
+async function auth(kind){
+  if(!sb){ cloudMsg("Connect Supabase first."); return; }
+  const email = $("cEmail").value.trim(), password = $("cPass").value;
+  if(!email || password.length<6){ cloudMsg("Enter your email and a password of 6 or more characters."); return; }
+  cloudMsg(kind==="up" ? "Creating account..." : "Signing in...");
+  const res = kind==="up" ? await sb.auth.signUp({email, password}) : await sb.auth.signInWithPassword({email, password});
+  if(res.error){ cloudMsg(res.error.message); return; }
+  if(kind==="up" && !res.data.session){ cloudMsg("Account created. Open the confirmation email, then press Sign in."); return; }
+  $("cPass").value = "";
+}
+$("cIn").onclick = ()=>auth("in");
+$("cUp").onclick = ()=>auth("up");
+$("cOut").onclick = async ()=>{ if(sb) await sb.auth.signOut(); sbUser = null; cloudUI(); cloudMsg("Signed out. Your data stays on this device."); };
+$("cSyncNow").onclick = ()=>cloudPull();
+$("copySql").onclick = ()=>{ const t = $("sqlBox").textContent; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(()=>cloudMsg("SQL copied."),()=>cloudMsg("Select the SQL text and copy it.")); };
+
+loadLocal(); fillSettings(); render(); initDb(); cloudInit();
 })();
 </script>
 
