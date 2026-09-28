@@ -745,8 +745,8 @@ function keyProblem(k){
 /* ---------- cloud sync (Supabase) ---------- */
 const APP = "hair-face";
 const CLOUD_KEY = "scalplog.cloud";
-const SUPABASE_URL = "";   // optional: paste your project URL here
-const SUPABASE_ANON = "sb_publishable_fivCuW6W7Jwmg4iKERrZxw_mYKPrCfS";  // publishable key, safe to be public
+const SUPABASE_URL = "https://ldrdsnbilxpctxscutmv.supabase.co";
+const SUPABASE_ANON = "";  // publishable key, safe to be public
 let sb = null, sbUser = null, lastPull = 0;
 function cloudCfg(){ try{ const c = JSON.parse(localStorage.getItem(CLOUD_KEY)||"{}"); return {url:c.url||SUPABASE_URL, key:c.key||SUPABASE_ANON}; }catch(e){ return {url:SUPABASE_URL, key:SUPABASE_ANON}; } }
 function cloudMsg(t){ $("cMsg").textContent = t; }
