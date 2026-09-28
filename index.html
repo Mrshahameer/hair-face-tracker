@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#15314d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hair Log">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%231d6b73%22/%3E%3Ctext x=%2232%22 y=%2243%22 font-size=%2230%22 font-family=%22Arial%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22%23f3a57f%22%3E60%3C/text%3E%3C/svg%3E">
+<title>60-Day Hair and Face Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a clinic-style log. Today's checklist first, then the 60-day grid, then stats and settings. */
+:root{
+  --bg:#eef1f6; --surface:#ffffff; --ink:#141b2d; --muted:#5b6479; --line:#dce1ea;
+  --hero-a:#15314d; --hero-b:#1d6b73; --on-hero:#f2f7f8; --on-hero-muted:#b9d3d6; --hero-bar:#f3a57f;
+  --accent:#c35f36; --accent-soft:#f8e6dc; --teal:#1d7078; --teal-soft:#d9eeef;
+  --face:#7155c4; --face-soft:#ece6fa; --supp:#2c8a58; --supp-soft:#dcf1e4; --photo:#2d68c9; --photo-soft:#dfe9fa;
+  --ok:#1d7078; --ok-soft:#d9eeef; --warn:#b07a12; --warn-soft:#f8ecd2; --skip:#9aa2b3;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0c111c; --surface:#141b2a; --ink:#e7ecf5; --muted:#8f99b0; --line:#243048;
+  --hero-a:#12304a; --hero-b:#16545c; --on-hero:#f2f7f8; --on-hero-muted:#a9c7cb; --hero-bar:#f3a57f;
+  --accent:#f08e62; --accent-soft:#3b2519; --teal:#4ec1c7; --teal-soft:#133236;
+  --face:#a88ef2; --face-soft:#2a2146; --supp:#5fd092; --supp-soft:#16301f; --photo:#74a7f7; --photo-soft:#1a2944;
+  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --skip:#69738a; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0c111c; --surface:#141b2a; --ink:#e7ecf5; --muted:#8f99b0; --line:#243048;
+  --hero-a:#12304a; --hero-b:#16545c; --on-hero:#f2f7f8; --on-hero-muted:#a9c7cb; --hero-bar:#f3a57f;
+  --accent:#f08e62; --accent-soft:#3b2519; --teal:#4ec1c7; --teal-soft:#133236;
+  --face:#a88ef2; --face-soft:#2a2146; --supp:#5fd092; --supp-soft:#16301f; --photo:#74a7f7; --photo-soft:#1a2944;
+  --ok:#4ec1c7; --ok-soft:#133236; --warn:#e9bb5a; --warn-soft:#36290f; --skip:#69738a; color-scheme:dark }
+
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(26px,5vw,38px);font-weight:700}
+h2{font-size:20px;font-weight:700}
+h3{font-size:15px;font-weight:600;font-family:var(--body)}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+
+header.top{display:flex;flex-wrap:wrap;gap:16px;align-items:end;justify-content:space-between;background:linear-gradient(135deg,var(--hero-a),var(--hero-b));color:var(--on-hero);border-radius:14px;padding:22px}
+header.top .eyebrow,header.top .note{color:var(--on-hero-muted)}
+.dayline{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.daybig{font-family:var(--display);font-size:clamp(44px,9vw,68px);font-weight:700;line-height:1;color:var(--on-hero)}
+.daybig small{font-size:.38em;color:var(--on-hero-muted);font-weight:500}
+.bar{height:6px;background:rgba(255,255,255,.18);border-radius:3px;overflow:hidden;width:min(320px,100%)}
+.bar i{display:block;height:100%;background:var(--hero-bar);border-radius:3px}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--on-hero-muted);font-family:var(--mono)}
+.status b{width:8px;height:8px;border-radius:50%;background:var(--skip)}
+.status.synced b{background:#7fe0b0}
+.status b{background:#f3c27f}
+
+.grid2{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:14px;min-width:0}
+
+.dayhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.nav{display:flex;gap:6px}
+.nav button{border:1px solid var(--line);background:transparent;border-radius:6px;padding:4px 10px;font-size:13px}
+.nav button:disabled{opacity:.35;cursor:default}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:99px;background:var(--teal-soft);color:var(--teal)}
+.tag.roll{background:var(--accent-soft);color:var(--accent)}
+.tag.face{background:var(--face-soft);color:var(--face)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+
+.slot{display:grid;gap:8px}
+.slot > .eyebrow{padding-top:4px}
+.task{--c:var(--teal);--cs:var(--teal-soft);display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:transparent;text-align:left;width:100%}
+.task.c-hair{--c:var(--accent);--cs:var(--accent-soft)}
+.task.c-face{--c:var(--face);--cs:var(--face-soft)}
+.task.c-supplement{--c:var(--supp);--cs:var(--supp-soft)}
+.task.c-photos{--c:var(--photo);--cs:var(--photo-soft)}
+.task:not(.skip):hover{border-color:var(--c)}
+.task .box{width:22px;height:22px;border:2px solid var(--c);border-radius:6px;display:grid;place-items:center;margin-top:1px}
+.task.done{background:var(--cs);border-color:transparent}
+.task.done .box{background:var(--c);border-color:var(--c)}
+.task.done .box::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.task .t{font-weight:600}
+.task .cat{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--c);margin-left:6px;font-weight:500}
+.task .h{font-size:13px;color:var(--muted)}
+.task.skip{cursor:default;border-style:dashed}
+.task.skip .t{color:var(--skip);text-decoration:line-through}
+.task.skip .box{border-style:dashed;border-color:var(--skip)}
+.task.skip .cat{color:var(--skip)}
+
+.rate{display:grid;gap:6px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:transparent;border-radius:99px;padding:3px 12px;font-size:13px}
+.chip[aria-pressed="true"]{background:var(--teal);color:var(--surface);border-color:var(--teal)}
+textarea,input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;width:100%}
+textarea{min-height:70px;resize:vertical}
+
+.cal{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:5px}
+@media (max-width:560px){.cal{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.cell{aspect-ratio:1;border:1px solid var(--line);border-radius:6px;background:transparent;padding:4px;display:flex;flex-direction:column;justify-content:space-between;position:relative;min-width:0;max-width:100%;font-family:var(--mono);font-size:11px}
+.cell .n{font-weight:500}
+.cell .m{display:flex;gap:2px;justify-content:flex-end;font-size:9px;font-weight:500}
+.cell .m .r{color:var(--accent)}
+.cell .m .s{color:var(--teal)}
+.cell .m .f{color:var(--face)}
+.cell.f1{background:var(--warn-soft)}
+.cell.f2{background:var(--ok-soft)}
+.cell.f3{background:var(--ok);color:var(--surface)}
+.cell.f3 .m .r,.cell.f3 .m .s,.cell.f3 .m .f{color:var(--surface)}
+.cell.miss{background:transparent;border-style:dashed}
+.cell.future{color:var(--muted)}
+.cell.today{outline:2px solid var(--hero-bar);outline-offset:1px}
+.cell.sel{border-color:var(--ink);border-width:2px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+.sw{width:12px;height:12px;border-radius:3px;border:1px solid var(--line);display:inline-block}
+
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:620px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{display:grid;gap:2px}
+.stat .v{font-family:var(--display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12px;color:var(--muted)}
+
+.plan{display:grid;gap:0;margin:0;padding:0;list-style:none}
+.plan li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;padding:9px 0;border-top:1px solid var(--line)}
+.plan li:first-child{border-top:0}
+.plan .d{font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:2px}
+.plan p{margin:0;font-size:14px}
+.plan p.h{color:var(--muted);font-size:13px}
+
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.form{grid-template-columns:minmax(0,1fr)}}
+.form label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.toggle{display:flex!important;gap:8px;align-items:center;grid-template-columns:none}
+.toggle input{width:auto}
+.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:1px solid var(--line);background:transparent;border-radius:6px;padding:7px 14px;font-size:13px}
+.btn.primary{background:var(--teal);color:var(--surface);border-color:var(--teal)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.callout{background:var(--teal-soft);border-radius:8px;padding:12px 14px;font-size:14px}
+.callout p{margin:0}
+.callout p + p{margin-top:6px}
+details summary{cursor:pointer;font-weight:600}
+@media (prefers-reduced-motion:no-preference){.task,.cell,.chip{transition:background .15s,border-color .15s}}
+</style>
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div style="display:grid;gap:8px">
+      <span class="eyebrow">Hair and face routine · 60 days</span>
+      <div class="dayline"><span class="daybig" id="dayBig">Day 1<small> of 60</small></span></div>
+      <div class="bar"><i id="barFill" style="width:2%"></i></div>
+    </div>
+    <div style="display:grid;gap:6px;justify-items:end">
+      <span class="status" id="status"><b></b><span>Saved in this browser</span></span>
+      <span class="note mono" id="rangeText"></span>
+    </div>
+  </header>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="dayTitle">
+      <div class="dayhead">
+        <div style="display:grid;gap:4px">
+          <h2 id="dayTitle">Today</h2>
+          <div class="tags" id="dayTags"></div>
+        </div>
+        <div class="nav">
+          <button id="prevDay" aria-label="Previous day">‹ Prev</button>
+          <button id="todayBtn">Today</button>
+          <button id="nextDay" aria-label="Next day">Next ›</button>
+        </div>
+      </div>
+      <div id="tasks" style="display:grid;gap:12px"></div>
+      <div class="rate">
+        <h3>Scalp irritation</h3>
+        <div class="chips" id="irrChips"></div>
+      </div>
+      <div class="rate">
+        <h3>Hair shedding</h3>
+        <div class="chips" id="shedChips"></div>
+      </div>
+      <div class="rate">
+        <h3>Face skin today</h3>
+        <div class="chips" id="faceChips"></div>
+      </div>
+      <label style="display:grid;gap:6px"><h3>Notes</h3>
+        <textarea id="notes" placeholder="Itching, redness, pimples, new growth, sleep, anything useful"></textarea>
+      </label>
+    </section>
+
+    <div style="display:grid;gap:20px;min-width:0">
+      <section class="panel" aria-labelledby="calTitle">
+        <div class="dayhead"><h2 id="calTitle">60-day grid</h2><span class="note">Tap a day to open it</span></div>
+        <div class="cal" id="cal"></div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--ok)"></i>All done</span>
+          <span><i class="sw" style="background:var(--ok-soft)"></i>Most done</span>
+          <span><i class="sw" style="background:var(--warn-soft)"></i>Some done</span>
+          <span><b class="mono" style="color:var(--accent)">R</b> Scalp roll</span>
+          <span><b class="mono" style="color:var(--face)">F</b> Face roll</span>
+          <span><b class="mono" style="color:var(--teal)">S</b> Shave</span>
+        </div>
+      </section>
+      <section class="panel" aria-labelledby="statTitle">
+        <h2 id="statTitle">Progress so far</h2>
+        <div class="stats" id="stats"></div>
+      </section>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="planTitle">
+      <h2 id="planTitle">Your plan</h2>
+      <ul class="plan" id="plan"></ul>
+    </section>
+
+    <section class="panel" aria-labelledby="shaveTitle">
+      <h2 id="shaveTitle">Shave every 7 or 15 days?</h2>
+      <div class="callout">
+        <p>Both are fine. Shaving does not change how hair grows.</p>
+        <p><b>7 days is the better pick for this plan.</b> Your scalp stays clean for rolling and your photos are easier to compare.</p>
+      </div>
+      <ul class="plan">
+        <li><span class="d">Rule 1</span><p>Shave at least 3 days before a roll. Blades leave tiny cuts. The app moves a roll if it lands too close.</p></li>
+        <li><span class="d">Rule 2</span><p>Wait 2 days after rolling before you shave.</p></li>
+        <li><span class="d">Rule 3</span><p>Shave in the morning. Skip the morning topical. Apply it at night if the scalp does not sting.</p></li>
+        <li><span class="d">Rule 4</span><p>Use a fresh blade and go with the grain. Rinse with cool water after.</p></li>
+      </ul>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="panel" aria-labelledby="faceTitle">
+      <h2 id="faceTitle">Face plan for oily, dull skin</h2>
+      <ul class="plan">
+        <li><span class="d">Wash</span><div><p>Face It charcoal wash once a day, at night. Wet face, small pea amount, light circles for 30 seconds, rinse with cool water.</p><p class="h">It has scrub grains. Do not press or rub hard. Mornings are a water rinse only.</p></div></li>
+        <li><span class="d">Roll</span><div><p>Once a week with the 720 head on forehead, cheeks and cheekbones. Use the 300 head beside the nose.</p><p class="h">Keep face heads for the face only. Never swap them with the 1200 scalp head.</p></div></li>
+        <li><span class="d">After roll</span><div><p>Nothing on the face that night. Water rinse only for 2 days. No Face It scrub until day 3.</p><p class="h">Keep minoxidil away from your forehead. Stay out of direct sun.</p></div></li>
+        <li><span class="d">Skip roll</span><div><p>Skip it if you have active pimples, cuts or redness in that area. Roll around them, never over them.</p></div></li>
+        <li><span class="d">Needle</span><div><p>0.25mm or 0.5mm is right for the face. If the face head is 1.0mm or longer, do not use it on your face at home.</p></div></li>
+        <li><span class="d">Beard</span><div><p>Do not shave or trim the cheek line for 2 days before or after a face roll.</p></div></li>
+      </ul>
+      <div class="callout">
+        <p><b>One addition is strongly advised.</b> An oil-free SPF 30+ sunscreen each morning. Rolled skin darkens easily in sun, and Lahore sun is strong. Turn it on in settings if you get one.</p>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="freshTitle">
+      <h2 id="freshTitle">What makes a face look fresh</h2>
+      <ul class="plan">
+        <li><span class="d">Sleep</span><p>7 to 8 hours. This changes dullness and eye bags faster than any product.</p></li>
+        <li><span class="d">Water</span><p>2.5 to 3 litres a day. More in hot weather.</p></li>
+        <li><span class="d">Hands</span><p>Do not touch or squeeze pimples. Change your pillow cover twice a week.</p></li>
+        <li><span class="d">Food</span><p>Cut sugary drinks and fried food for these 60 days. Eat protein at every meal.</p></li>
+        <li><span class="d">Collagen</span><p>May help skin a little over 8 to 12 weeks. It is a support, not the main driver.</p></li>
+      </ul>
+    </section>
+  </div>
+
+  <section class="panel" aria-labelledby="setTitle">
+    <h2 id="setTitle">Settings</h2>
+    <div class="form">
+      <label>Start date (day 1)<input type="date" id="sStart"></label>
+      <label>Shave every
+        <select id="sShave"><option value="7">7 days</option><option value="15">15 days</option><option value="0">I will not shave again</option></select>
+      </label>
+      <label>Scalp roll night
+        <select id="sRoll"><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select>
+      </label>
+      <label>Scalp roll how often (check needle length)
+        <select id="sRollFreq"><option value="1">Once a week (1.0mm to 1.5mm)</option><option value="2">Twice a week (0.25mm to 0.5mm)</option></select>
+      </label>
+      <label>Face roll night
+        <select id="sFaceRoll"><option value="0">Sunday</option><option value="1">Monday</option><option value="2">Tuesday</option><option value="3">Wednesday</option><option value="4">Thursday</option><option value="5">Friday</option><option value="6">Saturday</option></select>
+      </label>
+      <label>Start face rolling from day
+        <select id="sFaceFrom"></select>
+      </label>
+      <label>Start minoxidil from day
+        <select id="sMinox"><option value="0">Not using minoxidil</option></select>
+      </label>
+      <label>Start finasteride from day
+        <select id="sFin"><option value="0">Not taking finasteride</option></select>
+      </label>
+      <label class="toggle"><input type="checkbox" id="sAnagrow"> Keep Anagrow serum in the afternoon after minoxidil starts</label>
+      <label class="toggle"><input type="checkbox" id="sCollagen"> Taking Nutri Collagen</label>
+      <label class="toggle"><input type="checkbox" id="sSpf"> I have a sunscreen</label>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="dlBackup">Download backup file</button>
+      <button class="btn" id="copyBackup">Copy backup</button>
+      <span class="note" id="copyMsg"></span>
+    </div>
+    <p class="note">Your checks live in this browser only. Download a backup every Sunday. Do not clear browsing data for this site.</p>
+    <details>
+      <summary>Restore from backup</summary>
+      <div style="display:grid;gap:8px;margin-top:10px">
+        <label class="note" style="display:grid;gap:4px">Pick a backup file<input type="file" id="restoreFile" accept=".json,application/json"></label>
+        <textarea id="restoreBox" placeholder="Or paste a backup here"></textarea>
+        <div class="actions"><button class="btn primary" id="restoreBtn">Restore</button><span class="note" id="restoreMsg"></span></div>
+      </div>
+    </details>
+  </section>
+
+  <p class="note">This log is a tracker, not medical advice. See a dermatologist before starting finasteride.</p>
+</div>
+
+<script>
+(function(){
+const DAYS = 60;
+const LS_KEY = "scalplog.v1";
+const DEFAULTS = { start:"2026-09-28", shaveEvery:7, rollWeekday:5, rollFreq:1, faceWeekday:2, faceFrom:9, minoxFrom:15, finFrom:22, anagrow:true, collagen:true, spf:false };
+
+let state = { settings:{...DEFAULTS}, days:{} };
+let selected = null;
+let db = null;
+
+/* ---------- storage ---------- */
+function loadLocal(){
+  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const p = JSON.parse(raw); state.settings = {...DEFAULTS, ...(p.settings||{})}; state.days = p.days||{}; } }catch(e){}
+}
+function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
+const chains = {};
+function dbWrite(path, data){
+  if(!db) return;
+  chains[path] = (chains[path]||Promise.resolve()).then(()=>db.doc(path).set(data)).catch(()=>{});
+}
+function saveDay(key){ saveLocal(); dbWrite("days/"+key, state.days[key]||{}); }
+function saveSettings(){ saveLocal(); dbWrite("tracker/settings", state.settings); }
+
+async function initDb(){
+  try{
+    if(!window.claude || !window.claude.use) return;
+    const d = await window.claude.use("db");
+    if(!d) return;
+    db = d;
+    setStatus(true);
+    let firstS = true, firstD = true;
+    db.doc("tracker/settings").onSnapshot(snap=>{
+      if(snap.exists){ state.settings = {...DEFAULTS, ...snap.data()}; saveLocal(); fillSettings(); render(); }
+      else if(firstS){ dbWrite("tracker/settings", state.settings); }
+      firstS = false;
+    }, ()=>setStatus(false));
+    db.collection("days").onSnapshot(snap=>{
+      if(snap.empty && firstD){
+        Object.keys(state.days).forEach(k=>dbWrite("days/"+k, state.days[k]));
+      } else {
+        const next = {};
+        snap.docs.forEach(doc=>{ next[doc.id] = JSON.parse(JSON.stringify(doc.data())); });
+        if(document.activeElement && document.activeElement.id==="notes" && next[selKey()]){ next[selKey()].notes = state.days[selKey()] ? state.days[selKey()].notes : next[selKey()].notes; }
+        state.days = next; saveLocal(); render();
+      }
+      firstD = false;
+    }, ()=>setStatus(false));
+  }catch(e){ db = null; setStatus(false); }
+}
+function setStatus(synced){
+  const el = document.getElementById("status");
+  el.classList.toggle("synced", !!synced);
+  el.querySelector("span").textContent = synced ? "Saved to your account" : "Saved in this browser";
+}
+
+/* ---------- dates ---------- */
+function parseISO(s){ const [y,m,d] = s.split("-").map(Number); return new Date(y, m-1, d); }
+function iso(dt){ return dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0")+"-"+String(dt.getDate()).padStart(2,"0"); }
+function dateOf(n){ const d = parseISO(state.settings.start); d.setDate(d.getDate()+n-1); return d; }
+function keyOf(n){ return iso(dateOf(n)); }
+function todayN(){ const t = new Date(); t.setHours(0,0,0,0); return Math.round((t - parseISO(state.settings.start))/86400000)+1; }
+const WD = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+const MO = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function fmt(d){ return WD[d.getDay()]+" "+d.getDate()+" "+MO[d.getMonth()]; }
+
+/* ---------- schedule ---------- */
+const ROLL_START = 5; // let the fresh shave heal for 4 days
+function buildSchedule(){
+  const s = state.settings;
+  const shave = new Set();
+  if(+s.shaveEvery>0){ for(let n=1;n<=DAYS;n+= +s.shaveEvery) shave.add(n); } else { shave.add(1); }
+  const rollDays = [];
+  const wds = +s.rollFreq===2 ? [ +s.rollWeekday, (+s.rollWeekday+3)%7 ] : [ +s.rollWeekday ];
+  for(let n=ROLL_START;n<=DAYS;n++){ if(wds.includes(dateOf(n).getDay())) rollDays.push(n); }
+  const roll = new Map(); // day -> moved-from day or 0
+  rollDays.forEach(c=>{
+    let last = 0; shave.forEach(v=>{ if(v<=c && v>last) last=v; });
+    let d = c;
+    if(last && c-last<3) d = last+3;
+    while(roll.has(d) || shave.has(d)) d++;
+    if(d<=DAYS) roll.set(d, d!==c ? c : 0);
+  });
+  const face = new Set();
+  const ff = Math.max(1, +s.faceFrom||0);
+  if(+s.faceFrom>0){
+    for(let n=ff;n<=DAYS;n++){
+      if(dateOf(n).getDay()!==+s.faceWeekday) continue;
+      let d = n;
+      while(roll.has(d) && d<=DAYS) d++;
+      if(d<=DAYS) face.add(d);
+    }
+  }
+  return {shave, roll, face};
+}
+function lastRollBefore(n, sch){ let best=0; sch.roll.forEach((_,d)=>{ if(d<n && d>best) best=d; }); return best; }
+
+function tasksFor(n, sch){
+  const s = state.settings;
+  const minox = +s.minoxFrom>0 && n>= +s.minoxFrom;
+  const anaPM = minox && s.anagrow;
+  const top = minox ? "Minoxidil 5%" : "Anagrow serum";
+  const isShave = sch.shave.has(n);
+  const isRoll = sch.roll.has(n);
+  const afterRoll = sch.roll.has(n-1);
+  const isFace = sch.face.has(n);
+  const faceRecover = sch.face.has(n-1) || sch.face.has(n-2);
+  const lr = lastRollBefore(n, sch);
+  const list = [];
+  const add = (slot, c, id, t, h, skip)=>list.push({slot, c, id, t, h, skip:!!skip});
+
+  // Morning
+  if(isShave){
+    const h = n===1 ? "Done before starting this log. Tick it." : (lr && n-lr<2 ? "You rolled "+(n-lr)+" day ago. Push the shave 1 day if the scalp is still pink." : "Morning, before any topical. Fresh blade, go with the grain.");
+    add("Morning","Hair","shave","Shave head",h);
+  }
+  add("Morning","Face","faceAM","Rinse face with cool water","No face wash in the morning. Pat dry with a clean towel.");
+  if(s.spf) add("Morning","Face","spf","Sunscreen SPF 30+", isFace||faceRecover ? "Very important today. Rolled skin darkens in sun." : "Face, ears and your shaved scalp if you go out.");
+  add("Morning","Supplement","tablet","Maxzoon tablet","1 tablet after breakfast. Check the label for the dose.");
+  if(+s.finFrom>0 && n>= +s.finFrom) add("Morning","Hair","fin","Finasteride 1mg", n=== +s.finFrom ? "First dose today. Only with a dermatologist's prescription." : "Once a day, same time. Only as prescribed.");
+  if(isShave) add("Morning","Hair","topAM",top+" (morning)","Skip today. Fresh shave. Apply tonight only if it does not sting.",true);
+  else if(afterRoll) add("Morning","Hair","topAM",top+" (morning)","Skip. Scalp rolled last night. Restart this evening.",true);
+  else add("Morning","Hair","topAM",top+" (morning)", minox ? "1ml on a dry scalp, thinning areas. Wash hands after. Keep it off your forehead." : "Dry scalp, thinning areas. Massage for 1 minute.");
+
+  // Afternoon
+  if(s.collagen) add("Afternoon","Supplement","collagen","Nutri Collagen","Take with lunch. Follow the dose on the label.");
+  if(anaPM){
+    if(isRoll || afterRoll) add("Afternoon","Hair","ana","Anagrow serum", isRoll ? "Skip. Scalp roll tonight. Keep the scalp clean." : "Skip. Scalp rolled last night.", true);
+    else add("Afternoon","Hair","ana","Anagrow serum", isShave ? "Shaved this morning. Apply only if the scalp does not sting." : "Around 3 pm. At least 4 hours from minoxidil. Stop it if the scalp itches.");
+  }
+
+  // Night
+  if(isFace){
+    add("Night","Face","faceWash","Rinse face with water only","No Face It tonight. Scrub grains before rolling cause irritation.");
+    add("Night","Face","faceRoll","Face roll (720 head)","Soak in 70% alcohol. Forehead and cheeks. 4 to 5 light passes each direction. Nothing on the face after."+(sch.roll.has(n+1)?"":""));
+  } else if(faceRecover){
+    add("Night","Face","faceWash","Rinse face with water only","Face is healing from the roll. Face It returns on "+(sch.face.has(n-1)?"day "+(n+2):"tomorrow")+".");
+  } else {
+    add("Night","Face","faceWash","Face It charcoal wash","Pea amount. Light circles for 30 seconds. Do not press. Rinse with cool water.");
+  }
+  if(isRoll){
+    add("Night","Hair","roll","Scalp roll (1200 head)","Soak in 70% alcohol 5 to 10 min. 5 passes each direction, light pressure. Clean and dry after."+(sch.roll.get(n)?" Moved from day "+sch.roll.get(n)+" to give the shave 3 days to heal.":""));
+    add("Night","Hair","topPM",top+" (night)","No topical on scalp roll night.",true);
+  } else {
+    add("Night","Hair","topPM",top+" (night)", minox ? "1ml on a dry scalp. Let it dry 30 min before bed."+(isFace?" Apply it before the face roll and keep it off the forehead.":"") : "Dry scalp. Massage for 1 minute.");
+  }
+  if(n===1||n===30||n===60) add("Night","Photos","photo","Progress photos","Hair front, left, right, and face front. Same light and spot as day 1.");
+  if(n===ROLL_START-1) add("Night","Hair","buy","Get 70% isopropyl alcohol ready","You roll tomorrow. Any pharmacy has it.");
+  return list;
+}
+function dayScore(n, sch){
+  const t = tasksFor(n, sch).filter(x=>!x.skip);
+  const d = (state.days[keyOf(n)]||{}).done||{};
+  const done = t.filter(x=>d[x.id]).length;
+  return {done, total:t.length};
+}
+
+/* ---------- render ---------- */
+const $ = id=>document.getElementById(id);
+function selKey(){ return keyOf(selected); }
+function clampN(n){ return Math.max(1, Math.min(DAYS, n)); }
+
+function render(){
+  const sch = buildSchedule();
+  const tn = todayN();
+  if(selected===null) selected = clampN(tn);
+  const shownDay = clampN(tn);
+  $("dayBig").innerHTML = (tn<1 ? "Starts soon" : tn>DAYS ? "Done" : "Day "+tn) + (tn>=1&&tn<=DAYS ? "<small> of 60</small>" : "");
+  $("barFill").style.width = (Math.max(0,Math.min(DAYS,tn))/DAYS*100).toFixed(1)+"%";
+  $("rangeText").textContent = fmt(dateOf(1))+" to "+fmt(dateOf(DAYS));
+
+  // day panel
+  const n = selected, key = keyOf(n);
+  const rec = state.days[key] || {};
+  $("dayTitle").textContent = (n===tn ? "Today · " : "") + "Day "+n+" · "+fmt(dateOf(n));
+  const tags = [];
+  if(sch.roll.has(n)) tags.push('<span class="tag roll">Scalp roll night</span>');
+  if(sch.face.has(n)) tags.push('<span class="tag face">Face roll night</span>');
+  if(sch.shave.has(n)) tags.push('<span class="tag">Shave day</span>');
+  if(n<ROLL_START) tags.push('<span class="tag warn">Healing. No rolling yet</span>');
+  if(+state.settings.minoxFrom===n) tags.push('<span class="tag">Minoxidil starts</span>');
+  if(+state.settings.finFrom===n) tags.push('<span class="tag">Finasteride starts</span>');
+  $("dayTags").innerHTML = tags.join("");
+  $("prevDay").disabled = n<=1; $("nextDay").disabled = n>=DAYS;
+
+  const list = tasksFor(n, sch);
+  const done = rec.done || {};
+  const slots = ["Morning","Afternoon","Night"];
+  $("tasks").innerHTML = slots.map(sl=>{
+    const items = list.filter(x=>x.slot===sl);
+    if(!items.length) return "";
+    return '<div class="slot"><span class="eyebrow">'+sl+'</span>'+items.map(x=>{
+      const cls = "c-"+x.c.toLowerCase()+" "+(x.skip ? "task skip" : (done[x.id] ? "task done" : "task"));
+      return '<button class="'+cls+'" data-task="'+x.id+'" '+(x.skip?'aria-disabled="true" tabindex="-1"':'aria-pressed="'+(!!done[x.id])+'"')+'><span class="box"></span><span><span class="t">'+esc(x.t)+'</span><span class="cat">'+esc(x.c)+'</span><br><span class="h">'+esc(x.h)+'</span></span></button>';
+    }).join("")+'</div>';
+  }).join("");
+
+  const irrL = ["None","Mild","Red / itchy","Painful"];
+  const shedL = ["Normal","A bit more","A lot","Heavy"];
+  $("irrChips").innerHTML = irrL.map((l,i)=>'<button class="chip" data-rate="irr" data-v="'+i+'" aria-pressed="'+(rec.irr===i)+'">'+l+'</button>').join("");
+  const faceL = ["Fresh","Oily","Dry / tight","Red / pimples"];
+  $("faceChips").innerHTML = faceL.map((l,i)=>'<button class="chip" data-rate="face" data-v="'+i+'" aria-pressed="'+(rec.face===i)+'">'+l+'</button>').join("");
+  $("shedChips").innerHTML = shedL.map((l,i)=>'<button class="chip" data-rate="shed" data-v="'+i+'" aria-pressed="'+(rec.shed===i)+'">'+l+'</button>').join("");
+  if(document.activeElement!==$("notes")) $("notes").value = rec.notes || "";
+
+  // calendar
+  let cal = "";
+  for(let d=1; d<=DAYS; d++){
+    const sc = dayScore(d, sch);
+    const r = sc.total ? sc.done/sc.total : 0;
+    let cls = "cell";
+    if(d>tn) cls += " future";
+    else if(sc.done===0) cls += (d<tn ? " miss" : "");
+    else cls += r>=1 ? " f3" : r>=.6 ? " f2" : " f1";
+    if(d===tn) cls += " today";
+    if(d===selected) cls += " sel";
+    const m = (sch.roll.has(d)?'<span class="r">R</span>':'')+(sch.face.has(d)?'<span class="f">F</span>':'')+(sch.shave.has(d)?'<span class="s">S</span>':'');
+    cal += '<button class="'+cls+'" data-day="'+d+'" aria-label="Day '+d+', '+fmt(dateOf(d))+', '+sc.done+' of '+sc.total+' done"><span class="n">'+d+'</span><span class="m">'+m+'</span></button>';
+  }
+  $("cal").innerHTML = cal;
+
+  // stats
+  const upto = Math.max(0, Math.min(DAYS, tn));
+  let faceDone=0, faceDue=0, tDone=0, tTot=0, rollsDone=0, rollsDue=0, shaves=0, streak=0, irrSum=0, irrN=0;
+  for(let d=1; d<=upto; d++){
+    const sc = dayScore(d, sch); tDone+=sc.done; tTot+=sc.total;
+    const dd = (state.days[keyOf(d)]||{});
+    if(sch.roll.has(d)){ rollsDue++; if(dd.done&&dd.done.roll) rollsDone++; }
+    if(sch.face.has(d)){ faceDue++; if(dd.done&&dd.done.faceRoll) faceDone++; }
+    if(dd.done&&dd.done.shave) shaves++;
+    if(typeof dd.irr==="number"){ irrSum+=dd.irr; irrN++; }
+  }
+  for(let d=upto; d>=1; d--){ const sc = dayScore(d, sch); if(sc.total && sc.done===sc.total) streak++; else if(d===upto) continue; else break; }
+  const adh = tTot ? Math.round(tDone/tTot*100) : 0;
+  const irrAvg = irrN ? ["None","Mild","Red","Painful"][Math.round(irrSum/irrN)] : "No data";
+  $("stats").innerHTML = [
+    [adh+"%","Tasks done so far"],
+    [streak+"","Full days in a row"],
+    [rollsDone+" / "+rollsDue,"Scalp rolls done"],
+    [faceDone+" / "+faceDue,"Face rolls done"]
+  ].map(s=>'<div class="stat"><span class="v">'+s[0]+'</span><span class="l">'+s[1]+'</span></div>').join("");
+
+  // plan
+  const rolls = [...sch.roll.keys()].sort((a,b)=>a-b);
+  const firstRoll = rolls[0];
+  const mx = +state.settings.minoxFrom;
+  const st = state.settings;
+  const fx = [...sch.face].sort((a,b)=>a-b);
+  const fn = +st.finFrom;
+  const plan = [
+    ["Day 1", "Start Maxzoon, collagen, Anagrow morning and night, and Face It at night.", "Everything here is gentle. It is safe to start together."],
+    ["Day "+firstRoll, "First scalp roll. "+fmt(dateOf(firstRoll))+" night.", rolls.length+" scalp rolls across 60 days. Buy 70% alcohol before this."],
+    fx.length ? ["Day "+fx[0], "First face roll. "+fmt(dateOf(fx[0]))+" night.", fx.length+" face rolls across 60 days. Check the face head is 0.5mm or shorter."] : ["Face roll", "Not scheduled.", "Pick a start day in settings."],
+    mx ? ["Day "+mx, "Minoxidil 5% morning and night."+(st.anagrow?" Anagrow moves to the afternoon.":" Anagrow stops."), "Extra shedding in weeks 2 to 8 is normal. Do not stop."] : ["Minoxidil", "Not scheduled.", "Pick a start day in settings."],
+    fn ? ["Day "+fn, "Finasteride 1mg daily, only if a dermatologist prescribes it.", "Started 1 week after minoxidil so you can tell which one causes any side effect."] : ["Finasteride", "Not scheduled.", "Needs a prescription first."],
+    ["Day 30", "Hair and face photos. Compare with day 1.", "Same light, same spot, same angles."],
+    ["Day 60", "Final photos and review.", "Hair change shows at 3 to 6 months. Skin looks better in 4 to 8 weeks."]
+  ];
+  $("plan").innerHTML = plan.map(p=>'<li><span class="d">'+p[0]+'</span><div><p>'+p[1]+'</p><p class="h">'+p[2]+'</p></div></li>').join("");
+}
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function fillSettings(){
+  const s = state.settings;
+  $("sStart").value = s.start; $("sShave").value = String(s.shaveEvery);
+  $("sRoll").value = String(s.rollWeekday); $("sRollFreq").value = String(s.rollFreq);
+  $("sMinox").value = String(s.minoxFrom); $("sFin").value = String(s.finFrom);
+  $("sFaceRoll").value = String(s.faceWeekday); $("sFaceFrom").value = String(s.faceFrom);
+  $("sAnagrow").checked = !!s.anagrow; $("sCollagen").checked = !!s.collagen; $("sSpf").checked = !!s.spf;
+}
+
+/* ---------- events ---------- */
+function rec(){ const k = selKey(); if(!state.days[k]) state.days[k] = {}; return state.days[k]; }
+$("tasks").addEventListener("click", e=>{
+  const b = e.target.closest("[data-task]"); if(!b || b.classList.contains("skip")) return;
+  const r = rec(); r.done = {...(r.done||{})}; r.done[b.dataset.task] = !r.done[b.dataset.task];
+  saveDay(selKey()); render();
+});
+document.addEventListener("click", e=>{
+  const c = e.target.closest("[data-rate]"); if(!c) return;
+  const r = rec(); const v = +c.dataset.v; r[c.dataset.rate] = r[c.dataset.rate]===v ? null : v;
+  saveDay(selKey()); render();
+});
+let noteT;
+$("notes").addEventListener("input", e=>{
+  const k = selKey(); rec().notes = e.target.value;
+  clearTimeout(noteT); noteT = setTimeout(()=>saveDay(k), 700);
+});
+$("notes").addEventListener("blur", ()=>{ clearTimeout(noteT); saveDay(selKey()); });
+$("cal").addEventListener("click", e=>{ const c = e.target.closest("[data-day]"); if(!c) return; selected = +c.dataset.day; render(); });
+$("prevDay").onclick = ()=>{ selected = clampN(selected-1); render(); };
+$("nextDay").onclick = ()=>{ selected = clampN(selected+1); render(); };
+$("todayBtn").onclick = ()=>{ selected = clampN(todayN()); render(); };
+
+function dayOpts(id, from, to){ const el = $(id); for(let d=from; d<=to; d++){ const o = document.createElement("option"); o.value = d; o.textContent = "Day "+d+" · "+fmt(dateOf(d)); el.appendChild(o); } }
+dayOpts("sMinox", 5, 45); dayOpts("sFin", 1, 60); dayOpts("sFaceFrom", 3, 30);
+$("sFaceFrom").insertAdjacentHTML("afterbegin", '<option value="0">No face rolling</option>');
+function onSet(){
+  state.settings = { start: $("sStart").value || DEFAULTS.start, shaveEvery:+$("sShave").value, rollWeekday:+$("sRoll").value, rollFreq:+$("sRollFreq").value,
+    faceWeekday:+$("sFaceRoll").value, faceFrom:+$("sFaceFrom").value, minoxFrom:+$("sMinox").value, finFrom:+$("sFin").value,
+    anagrow:$("sAnagrow").checked, collagen:$("sCollagen").checked, spf:$("sSpf").checked };
+  saveSettings(); render();
+}
+["sStart","sShave","sRoll","sRollFreq","sFaceRoll","sFaceFrom","sMinox","sFin","sAnagrow","sCollagen","sSpf"].forEach(id=>$(id).addEventListener("change", onSet));
+
+$("copyBackup").onclick = ()=>{
+  const txt = JSON.stringify(state);
+  const msg = $("copyMsg");
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=>{ msg.textContent = "Backup copied. Paste it in a note or WhatsApp to yourself."; })
+    .catch(()=>{ $("restoreBox").value = txt; $("restoreBox").closest("details").open = true; $("restoreBox").select(); msg.textContent = "Copy the selected text below."; });
+  } else { $("restoreBox").value = txt; $("restoreBox").closest("details").open = true; $("restoreBox").select(); msg.textContent = "Copy the selected text below."; }
+};
+$("restoreBtn").onclick = ()=>{
+  try{
+    const p = JSON.parse($("restoreBox").value);
+    if(!p || typeof p!=="object" || !p.days) throw 0;
+    state.settings = {...DEFAULTS, ...(p.settings||{})}; state.days = p.days;
+    saveSettings(); Object.keys(state.days).forEach(k=>saveDay(k));
+    fillSettings(); render(); $("restoreMsg").textContent = "Restored.";
+  }catch(e){ $("restoreMsg").textContent = "That text is not a valid backup. Copy it again and paste the whole thing."; }
+};
+
+$("dlBackup").onclick = ()=>{
+  try{
+    const blob = new Blob([JSON.stringify(state, null, 1)], {type:"application/json"});
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+    a.download = "hair-face-log-backup-"+iso(new Date())+".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    $("copyMsg").textContent = "Backup file saved to your Downloads.";
+  }catch(e){ $("copyMsg").textContent = "Download failed. Use Copy backup instead."; }
+};
+$("restoreFile").addEventListener("change", e=>{
+  const f = e.target.files && e.target.files[0]; if(!f) return;
+  const r = new FileReader(); r.onload = ()=>{ $("restoreBox").value = String(r.result); $("restoreMsg").textContent = "File loaded. Press Restore."; }; r.readAsText(f);
+});
+loadLocal(); fillSettings(); render(); initDb();
+})();
+</script>
+
+</body>
+</html>
