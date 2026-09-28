@@ -161,6 +161,72 @@ textarea{min-height:70px;resize:vertical}
 .callout p{margin:0}
 .callout p + p{margin-top:6px}
 details summary{cursor:pointer;font-weight:600}
+/* guides */
+.guides{gap:16px}
+.gtabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.gtab{flex:0 0 auto;border:1px solid var(--line);background:transparent;border-radius:99px;padding:6px 14px;font-size:13px;white-space:nowrap}
+.gtab[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:var(--surface)}
+.gpane{display:grid;gap:16px}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:620px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.facts div{background:var(--bg);border-radius:10px;padding:10px 12px;display:grid;gap:2px}
+.facts b{font-family:var(--display);font-size:18px}
+.facts span{font-size:12px;color:var(--muted)}
+.gsplit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:720px){.gsplit{grid-template-columns:minmax(0,1fr)}}
+.fig{margin:0;background:var(--bg);border-radius:12px;padding:12px;display:grid;gap:8px;min-width:0}
+.fig svg{width:100%;height:auto;max-height:380px}
+.fig figcaption{font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.key{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:2px}
+.k-roll{background:var(--accent-soft);border:1px solid var(--accent)}
+.k-hot{background:var(--accent)}
+.k-skip{background:var(--line)}
+.k-face{background:var(--face-soft);border:1px solid var(--face)}
+.k-small{background:var(--teal)}
+.k-no{background:var(--bad-soft);border:1px solid var(--bad)}
+.k-drop{background:var(--photo);border-radius:50%}
+.z-skin{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.z-skip{fill:var(--line);opacity:.55}
+.hatchline{stroke:var(--muted);stroke-width:1;opacity:.35}
+.z-roll{fill:var(--accent-soft);stroke:var(--accent);stroke-width:2}
+.z-edge{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round}
+.z-hot{fill:var(--accent);opacity:.28}
+.z-face{fill:var(--face-soft);stroke:var(--face);stroke-width:2}
+.z-small{fill:var(--teal);opacity:.75}
+.z-no{fill:var(--bad-soft);stroke:var(--bad);stroke-width:2}
+.z-line{fill:var(--muted);stroke:var(--muted);stroke-width:1.5}
+.lbl{font-family:var(--mono);font-size:11px;fill:var(--ink)}
+.lbl.mute{fill:var(--muted)}
+.arr{stroke:var(--accent);stroke-width:3}
+.arr.a2{stroke:var(--face)}
+.ahead{fill:var(--ink)}
+.drops circle{fill:var(--photo)}
+.timeline{min-width:600px}
+.xscroll{overflow-x:auto}
+.axis{stroke:var(--line);stroke-width:3}
+.ticks text{font-family:var(--mono);font-size:10px;fill:var(--muted);text-anchor:middle}
+.dot{stroke:var(--surface);stroke-width:2}
+.dot.supp{fill:var(--supp)} .dot.hair{fill:var(--accent)} .dot.face{fill:var(--face)} .dot.mute{fill:var(--muted)}
+.supp-t{fill:var(--supp)} .hair-t{fill:var(--accent)} .face-t{fill:var(--face)}
+.steps{margin:0;padding-left:22px;display:grid;gap:8px}
+.steps li{padding-left:4px}
+.steps.tight{gap:4px;font-size:14px}
+.gside{display:grid;gap:10px;min-width:0}
+.gt{width:100%;border-collapse:collapse;font-size:13px}
+.gt th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:6px 4px;border-bottom:1px solid var(--line)}
+.gt td{padding:7px 4px;border-bottom:1px solid var(--line)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.gcard{--c:var(--teal);--cs:var(--teal-soft);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.gcard.c-hair{--c:var(--accent);--cs:var(--accent-soft)} .gcard.c-supplement{--c:var(--supp);--cs:var(--supp-soft)} .gcard.bad{--c:var(--bad);--cs:var(--bad-soft)}
+.gcard h3{color:var(--c)}
+.gcard .when{margin:0;font-family:var(--mono);font-size:12px;background:var(--cs);color:var(--c);padding:3px 8px;border-radius:6px;justify-self:start}
+.gcard ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.evidence{margin:0;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.srcs{margin:0;padding-left:18px;display:grid;gap:8px}
+.srcs a{color:var(--teal)}
+.howto{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--teal);text-decoration:underline;cursor:pointer}
+.guidelink{color:var(--on-hero);font-family:var(--mono);font-size:12px;text-decoration:underline}
+
 @media (prefers-reduced-motion:no-preference){.task,.cell,.chip{transition:background .15s,border-color .15s}}
 </style>
 <style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
@@ -177,6 +243,7 @@ details summary{cursor:pointer;font-weight:600}
     </div>
     <div style="display:grid;gap:6px;justify-items:end">
       <span class="scorechip" id="scoreChip">Score 100</span>
+      <a class="guidelink" href="#guides">How-to guides</a>
       <span class="status" id="status"><b></b><span>Saved in this browser</span></span>
       <span class="note mono" id="rangeText"></span>
     </div>
@@ -287,6 +354,317 @@ details summary{cursor:pointer;font-weight:600}
       </ul>
     </section>
   </div>
+
+  <section class="panel guides" id="guides" aria-labelledby="gTitle">
+    <div class="dayhead">
+      <div style="display:grid;gap:4px"><span class="eyebrow">How to do it right</span><h2 id="gTitle">Guides</h2></div>
+      <span class="note">Based on clinical trials and dermatology guidance</span>
+    </div>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" class="hatchline"/></pattern></defs></svg>
+    <div class="gtabs" role="tablist" aria-label="Guides">
+      <button role="tab" class="gtab" data-g="scalp" aria-selected="true">Scalp roll</button>
+      <button role="tab" class="gtab" data-g="face" aria-selected="false">Face roll</button>
+      <button role="tab" class="gtab" data-g="tabs" aria-selected="false">Tablets</button>
+      <button role="tab" class="gtab" data-g="minox" aria-selected="false">Minoxidil and serum</button>
+      <button role="tab" class="gtab" data-g="wash" aria-selected="false">Face wash</button>
+      <button role="tab" class="gtab" data-g="shave" aria-selected="false">Shaving</button>
+      <button role="tab" class="gtab" data-g="flags" aria-selected="false">Red flags</button>
+      <button role="tab" class="gtab" data-g="src" aria-selected="false">Sources</button>
+    </div>
+
+    <!-- SCALP -->
+    <div class="gpane" data-pane="scalp" role="tabpanel">
+      <div class="facts">
+        <div><b>1.0 to 1.5mm</b><span>Once a week</span></div>
+        <div><b>0.25 to 0.5mm</b><span>Up to 2 times a week</span></div>
+        <div><b>10 min</b><span>Whole session</span></div>
+        <div><b>Pink skin</b><span>Stop point</span></div>
+      </div>
+      <div class="gsplit">
+        <figure class="fig">
+          <svg viewBox="0 0 300 330" role="img" aria-labelledby="scalpFigT">
+            <title id="scalpFigT">Top view of the head showing where to roll</title>
+                        <polygon points="150,14 138,34 162,34" class="z-line"/>
+            <text x="150" y="11" class="lbl" text-anchor="middle">FRONT</text>
+            <ellipse cx="38" cy="175" rx="10" ry="24" class="z-skin"/>
+            <ellipse cx="262" cy="175" rx="10" ry="24" class="z-skin"/>
+            <ellipse cx="150" cy="175" rx="112" ry="140" class="z-skip"/>
+            <ellipse cx="150" cy="175" rx="112" ry="140" fill="url(#hatch)"/>
+            <path d="M88,70 Q150,30 212,70 Q232,150 205,250 Q150,290 95,250 Q68,150 88,70 Z" class="z-roll"/>
+            <path d="M92,72 Q150,40 208,72" class="z-edge"/>
+            <circle cx="96" cy="92" r="16" class="z-hot"/>
+            <circle cx="204" cy="92" r="16" class="z-hot"/>
+            <circle cx="150" cy="232" r="30" class="z-hot"/>
+            <text x="150" y="92" class="lbl" text-anchor="middle">1 Hairline</text>
+            <text x="96" y="125" class="lbl" text-anchor="middle">2 Temple</text>
+            <text x="204" y="125" class="lbl" text-anchor="middle">2 Temple</text>
+            <text x="150" y="165" class="lbl" text-anchor="middle">3 Mid-scalp</text>
+            <text x="150" y="236" class="lbl" text-anchor="middle">4 Crown</text>
+            <text x="30" y="300" class="lbl mute">Sides and back: skip</text>
+          </svg>
+          <figcaption><span class="key k-roll"></span>Roll <span class="key k-hot"></span>Focus zones <span class="key k-skip"></span>Skip</figcaption>
+        </figure>
+        <figure class="fig">
+          <svg viewBox="0 0 300 330" role="img" aria-labelledby="dirFigT">
+            <title id="dirFigT">Four rolling directions for each zone</title>
+            <rect x="60" y="40" width="180" height="180" rx="14" class="z-roll"/>
+            <line x1="150" y1="58" x2="150" y2="202" class="arr" marker-end="url(#ah)" marker-start="url(#ah)"/>
+            <line x1="78" y1="130" x2="222" y2="130" class="arr" marker-end="url(#ah)" marker-start="url(#ah)"/>
+            <line x1="86" y1="66" x2="214" y2="194" class="arr a2" marker-end="url(#ah)" marker-start="url(#ah)"/>
+            <line x1="214" y1="66" x2="86" y2="194" class="arr a2" marker-end="url(#ah)" marker-start="url(#ah)"/>
+            <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahead"/></marker></defs>
+            <text x="150" y="250" class="lbl" text-anchor="middle">Up and down · side to side · both diagonals</text>
+            <text x="150" y="272" class="lbl" text-anchor="middle">5 passes each way, per zone</text>
+            <text x="150" y="294" class="lbl mute" text-anchor="middle">Lift between passes. Never drag sideways.</text>
+          </svg>
+          <figcaption>One zone at a time. About 2 minutes per zone.</figcaption>
+        </figure>
+      </div>
+      <ol class="steps">
+        <li><b>Check timing.</b> At least 3 days after a shave. No cuts, pimples or sunburn on the scalp.</li>
+        <li><b>Clean scalp.</b> Rinse with plain water and let it dry fully.</li>
+        <li><b>Disinfect.</b> Wash hands. Soak the 1200 head in 70% isopropyl alcohol for 5 to 10 minutes. Let it air dry for 1 minute.</li>
+        <li><b>Roll by zone.</b> Hairline, then each temple, then mid-scalp, then crown. Stretch the skin with your free hand.</li>
+        <li><b>Four directions.</b> 5 passes up and down, 5 side to side, 5 on each diagonal. Lift the roller at the end of each pass.</li>
+        <li><b>Light pressure.</b> The weight of your hand is enough. Stop a zone when it turns evenly pink. Tiny pinpoint spots are fine. Dripping blood means too hard.</li>
+        <li><b>Clean up.</b> Rinse the roller, soak it in alcohol again, dry it and put it in its case.</li>
+        <li><b>Aftercare.</b> Nothing on the scalp tonight. Minoxidil and serum restart after 24 hours. Cover your head in the sun for 2 days.</li>
+      </ol>
+      <div class="callout"><p><b>Why skip the sides and back?</b> Hair there resists DHT, the hormone behind male pattern loss. It rarely thins. Rolling it only adds irritation. If your sides are thinning, show a dermatologist. That is a different pattern.</p></div>
+      <p class="note">Replace the roller head after 10 to 15 uses, or sooner if it feels scratchy. Dull or bent needles tear skin.</p>
+      <p class="evidence"><b>Evidence.</b> In a 2013 trial, men who rolled with a 1.5mm roller once a week plus minoxidil got far more regrowth in 12 weeks than minoxidil alone. A 2024 trial in Indonesian men found the same pattern with 0.6mm needles. Minoxidil was paused for 24 hours after each session in both.</p>
+    </div>
+
+    <!-- FACE -->
+    <div class="gpane" data-pane="face" role="tabpanel" hidden>
+      <div class="facts">
+        <div><b>0.25mm</b><span>Up to 3 times a week</span></div>
+        <div><b>0.5mm</b><span>Once a week</span></div>
+        <div><b>1.0mm+</b><span>Never at home</span></div>
+        <div><b>2 min</b><span>Whole face, max</span></div>
+      </div>
+      <div class="gsplit">
+        <figure class="fig">
+          <svg viewBox="0 0 300 360" role="img" aria-labelledby="faceFigT">
+            <title id="faceFigT">Face zones for rolling</title>
+            <ellipse cx="150" cy="180" rx="108" ry="150" class="z-skin"/>
+            <path d="M52,215 Q60,300 150,332 Q240,300 248,215 Q230,235 200,236 Q150,250 100,236 Q70,235 52,215 Z" class="z-skip"/>
+            <path d="M52,215 Q60,300 150,332 Q240,300 248,215 Q230,235 200,236 Q150,250 100,236 Q70,235 52,215 Z" fill="url(#hatch)"/>
+            <ellipse cx="150" cy="72" rx="78" ry="32" class="z-face"/>
+            <ellipse cx="86" cy="186" rx="30" ry="34" class="z-face"/>
+            <ellipse cx="214" cy="186" rx="30" ry="34" class="z-face"/>
+            <ellipse cx="108" cy="140" rx="26" ry="13" class="z-no"/>
+            <ellipse cx="192" cy="140" rx="26" ry="13" class="z-no"/>
+            <rect x="136" y="124" width="28" height="14" rx="6" class="z-small"/>
+            <rect x="127" y="160" width="9" height="42" rx="4" class="z-small"/>
+            <rect x="164" y="160" width="9" height="42" rx="4" class="z-small"/>
+            <path d="M140,150 L150,205 L160,150" class="z-line" fill="none"/>
+            <ellipse cx="150" cy="268" rx="28" ry="10" class="z-no"/>
+            <text x="150" y="76" class="lbl" text-anchor="middle">Forehead · 720</text>
+            <text x="86" y="190" class="lbl" text-anchor="middle">Cheek</text>
+            <text x="214" y="190" class="lbl" text-anchor="middle">Cheek</text>
+            <text x="150" y="118" class="lbl" text-anchor="middle">Brows · 300</text>
+            <text x="150" y="228" class="lbl" text-anchor="middle">Nose sides · 300</text>
+            <text x="150" y="304" class="lbl mute" text-anchor="middle">Beard: skip</text>
+            <text x="150" y="350" class="lbl mute" text-anchor="middle">Eyes and lips: never</text>
+          </svg>
+          <figcaption><span class="key k-face"></span>720 head <span class="key k-small"></span>300 head <span class="key k-no"></span>Never <span class="key k-skip"></span>Skip</figcaption>
+        </figure>
+        <div class="gside">
+          <h3>Order and passes</h3>
+          <table class="gt">
+            <thead><tr><th>Zone</th><th>Head</th><th>Passes</th></tr></thead>
+            <tbody>
+              <tr><td>Forehead</td><td>720</td><td>3 to 4 each way</td></tr>
+              <tr><td>Left cheek</td><td>720</td><td>3 to 4 each way</td></tr>
+              <tr><td>Right cheek</td><td>720</td><td>3 to 4 each way</td></tr>
+              <tr><td>Between brows</td><td>300</td><td>2 to 3, up and down</td></tr>
+              <tr><td>Nose sides</td><td>300</td><td>2 to 3, up and down</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Each way means up and down, side to side, and diagonal. Stay 1cm away from the eye socket bone.</p>
+          <div class="callout"><p><b>Beard skin.</b> Needles catch on beard hair and do little under it. Roll only the cheek skin above your beard line.</p></div>
+        </div>
+      </div>
+      <ol class="steps">
+        <li><b>Prep.</b> Rinse your face with water only. No Face It scrub tonight. Pat dry.</li>
+        <li><b>Disinfect.</b> Soak the 720 and 300 heads in 70% alcohol for 5 minutes. Keep face heads for the face only.</li>
+        <li><b>Stretch and roll.</b> Hold the skin tight with your free hand. Gentle, steady pressure. Do not roll one spot again and again.</li>
+        <li><b>Go around pimples.</b> Never roll over a pimple, cut, cold sore or rash. It spreads bacteria.</li>
+        <li><b>Finish.</b> Rinse with cool water. If skin feels tight, use a plain fragrance-free moisturizer. Nothing else tonight.</li>
+        <li><b>Next 2 days.</b> Water rinse only. No scrub. Stay out of direct sun. Sunscreen SPF 30+ if you go out.</li>
+      </ol>
+      <p class="note">Normal: pink for a few hours, slightly tight for a day. Not normal: bumps, pus or redness after 2 days. Stop and see a doctor.</p>
+      <p class="evidence"><b>Evidence.</b> Dermatology guidance puts home face rolling at 0.25 to 0.5mm, 2 minutes at most, on forehead, cheeks and chin, away from eyes and lips, with sunscreen for several days after.</p>
+    </div>
+
+    <!-- TABLETS -->
+    <div class="gpane" data-pane="tabs" role="tabpanel" hidden>
+      <figure class="fig wide">
+        <div class="xscroll">
+          <svg viewBox="0 0 660 190" class="timeline" role="img" aria-labelledby="tlT">
+            <title id="tlT">Daily timing for tablets and topicals</title>
+            <line x1="30" y1="110" x2="630" y2="110" class="axis"/>
+            <g class="ticks">
+              <text x="30" y="132">7am</text><text x="105" y="132">9am</text><text x="180" y="132">11am</text><text x="255" y="132">1pm</text><text x="330" y="132">3pm</text><text x="405" y="132">5pm</text><text x="480" y="132">7pm</text><text x="555" y="132">9pm</text><text x="630" y="132">11pm</text>
+            </g>
+            <circle cx="68" cy="110" r="7" class="dot supp"/><text x="68" y="92" class="lbl" text-anchor="middle">8:00 Breakfast</text><text x="68" y="76" class="lbl supp-t" text-anchor="middle">Maxzoon</text><text x="68" y="60" class="lbl hair-t" text-anchor="middle">Finasteride</text>
+            <circle cx="86" cy="110" r="7" class="dot hair"/><text x="86" y="156" class="lbl hair-t" text-anchor="middle">8:30 Minoxidil</text>
+            <circle cx="255" cy="110" r="7" class="dot supp"/><text x="255" y="92" class="lbl" text-anchor="middle">1:00 Lunch</text><text x="255" y="76" class="lbl supp-t" text-anchor="middle">Collagen</text>
+            <circle cx="330" cy="110" r="7" class="dot hair"/><text x="330" y="156" class="lbl hair-t" text-anchor="middle">3:00 Anagrow</text>
+            <circle cx="518" cy="110" r="7" class="dot hair"/><text x="518" y="156" class="lbl hair-t" text-anchor="middle">8:00 Minoxidil</text>
+            <circle cx="574" cy="110" r="7" class="dot face"/><text x="574" y="92" class="lbl face-t" text-anchor="middle">9:30 Face It</text>
+            <circle cx="611" cy="110" r="7" class="dot mute"/><text x="611" y="156" class="lbl mute" text-anchor="middle">10:30 Bed</text>
+            <text x="30" y="182" class="lbl mute">Roll nights: roll around 9pm. Skip the 8pm minoxidil that night.</text>
+          </svg>
+        </div>
+      </figure>
+      <div class="cards">
+        <article class="gcard c-supplement">
+          <h3>Maxzoon</h3>
+          <p class="when">1 tablet · after breakfast</p>
+          <ul>
+            <li>Food helps absorb vitamins A, D and E and stops nausea.</li>
+            <li>Take it with water. Keep tea and coffee 1 hour away. They block iron and zinc.</li>
+            <li>Same time every day. Missed one? Skip it. Never double.</li>
+          </ul>
+        </article>
+        <article class="gcard c-supplement">
+          <h3>Nutri Collagen</h3>
+          <p class="when">Label dose · with lunch</p>
+          <ul>
+            <li>Time of day does not matter much. Taking it every day does.</li>
+            <li>Pair it with vitamin C food. Guava, orange, kinnow or lemon water.</li>
+            <li>Skin change shows in 8 to 12 weeks.</li>
+          </ul>
+        </article>
+        <article class="gcard c-hair">
+          <h3>Finasteride 1mg</h3>
+          <p class="when">1 tablet · same time daily</p>
+          <ul>
+            <li>Only with a dermatologist's prescription.</li>
+            <li>With or without food. Pair it with breakfast so you never forget.</li>
+            <li>Missed one? Skip it. Never double.</li>
+            <li>Results take 3 months or more. Stopping brings the loss back within a year.</li>
+            <li>Keep broken tablets away from women who are or may become pregnant.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="callout"><p><b>Blood test coming up?</b> Check both labels for biotin. Biotin can make thyroid and heart blood tests read wrong. Stop it 3 days before the test and tell the lab.</p><p>Do not add any other hair or multivitamin tablet on top of these.</p></div>
+    </div>
+
+    <!-- MINOXIDIL -->
+    <div class="gpane" data-pane="minox" role="tabpanel" hidden>
+      <div class="facts">
+        <div><b>1ml</b><span>Per dose (half capful if foam)</span></div>
+        <div><b>2 times</b><span>Morning and evening</span></div>
+        <div><b>2 to 4 hrs</b><span>Before bed</span></div>
+        <div><b>4 hrs</b><span>No hair wash after</span></div>
+      </div>
+      <div class="gsplit">
+        <figure class="fig">
+          <svg viewBox="0 0 300 300" role="img" aria-labelledby="mxT">
+            <title id="mxT">Where to apply minoxidil</title>
+            <ellipse cx="150" cy="160" rx="112" ry="130" class="z-skin"/>
+            <path d="M88,60 Q150,22 212,60 Q232,140 205,235 Q150,272 95,235 Q68,140 88,60 Z" class="z-roll"/>
+            <polygon points="150,8 138,26 162,26" class="z-line"/>
+            <g class="drops">
+              <circle cx="120" cy="60" r="6"/><circle cx="150" cy="52" r="6"/><circle cx="180" cy="60" r="6"/>
+              <circle cx="98" cy="86" r="6"/><circle cx="202" cy="86" r="6"/>
+              <circle cx="150" cy="140" r="6"/><circle cx="130" cy="170" r="6"/><circle cx="170" cy="170" r="6"/>
+              <circle cx="150" cy="215" r="6"/><circle cx="130" cy="230" r="6"/><circle cx="170" cy="230" r="6"/>
+            </g>
+            <text x="150" y="292" class="lbl" text-anchor="middle">Small drops across thinning areas, then spread</text>
+          </svg>
+          <figcaption><span class="key k-drop"></span>Drop points. Total 1ml.</figcaption>
+        </figure>
+        <div class="gside">
+          <h3>Minoxidil 5%</h3>
+          <ol class="steps tight">
+            <li>Scalp and hair fully dry.</li>
+            <li>Fill the dropper to the 1ml line.</li>
+            <li>Drop it in small spots on the hairline, temples, mid-scalp and crown.</li>
+            <li>Spread with fingertips for 30 seconds. Do not rub hard.</li>
+            <li>Wash your hands right away.</li>
+            <li>Let it dry. No hairdryer. No wash for 4 hours.</li>
+          </ol>
+          <h3>Anagrow foam</h3>
+          <ol class="steps tight">
+            <li>Once minoxidil starts, use it at 3pm only. Keep 4 hours from minoxidil.</li>
+            <li>Amount as the leaflet says. Massage for 1 minute.</li>
+            <li>Stop it if the scalp itches or flakes.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="cards">
+        <article class="gcard c-hair"><h3>Skip a dose when</h3><ul><li>Roll night and the next 24 hours.</li><li>Fresh shave morning. Apply at night if no sting.</li><li>Scalp is sunburned, cut or red.</li></ul></article>
+        <article class="gcard c-hair"><h3>What to expect</h3><ul><li>Extra shedding in weeks 2 to 8. Old hairs make room. Do not stop.</li><li>First results around month 4. No change by month 4? See a doctor.</li><li>Gains fade if you stop.</li></ul></article>
+        <article class="gcard c-hair"><h3>Keep it off your face</h3><ul><li>It can grow hair where it drips. Keep it above the hairline.</li><li>Apply at 8pm so it dries before your pillow.</li><li>Missed a dose? Apply it now, unless the next one is close.</li></ul></article>
+      </div>
+    </div>
+
+    <!-- WASH -->
+    <div class="gpane" data-pane="wash" role="tabpanel" hidden>
+      <div class="facts">
+        <div><b>Night</b><span>Face It, once a day</span></div>
+        <div><b>Morning</b><span>Cool water only</span></div>
+        <div><b>30 sec</b><span>Light circles</span></div>
+        <div><b>Pea size</b><span>Amount</span></div>
+      </div>
+      <ol class="steps">
+        <li><b>Wet.</b> Lukewarm water. Hot water strips oil and makes oily skin make more.</li>
+        <li><b>Lather.</b> A pea-sized amount in wet palms first.</li>
+        <li><b>Circles.</b> Fingertips only. Forehead, nose, chin, cheeks. 30 seconds. No pressing. The grains do the work.</li>
+        <li><b>Rinse.</b> Cool water until no grains are left. Check the hairline and beard edge.</li>
+        <li><b>Pat dry.</b> Clean towel. Do not rub. Change your pillow cover twice a week.</li>
+      </ol>
+      <div class="callout"><p><b>Around face rolls.</b> No Face It on roll night and for 2 days after. Water only. The scrub grains irritate freshly rolled skin.</p><p>Skin feels tight, dry or stings? Use it every other night.</p></div>
+    </div>
+
+    <!-- SHAVE -->
+    <div class="gpane" data-pane="shave" role="tabpanel" hidden>
+      <div class="facts">
+        <div><b>Every 7 days</b><span>Monday morning</span></div>
+        <div><b>3 days</b><span>Before a scalp roll</span></div>
+        <div><b>2 days</b><span>After a scalp roll</span></div>
+        <div><b>Fresh blade</b><span>Every shave</span></div>
+      </div>
+      <ol class="steps">
+        <li><b>Soften.</b> Shave after a warm shower. Wet stubble cuts cleaner.</li>
+        <li><b>Lather.</b> Shaving gel or foam. Never dry shave.</li>
+        <li><b>With the grain first.</b> Front to back on top. Downward on the sides. Short strokes. Rinse the blade often.</li>
+        <li><b>Rinse cool.</b> Cool water closes the skin and calms it.</li>
+        <li><b>No topical this morning.</b> Minoxidil at night only if the scalp does not sting.</li>
+        <li><b>Sun.</b> A freshly shaved scalp burns fast. Wear a cap outdoors.</li>
+      </ol>
+    </div>
+
+    <!-- FLAGS -->
+    <div class="gpane" data-pane="flags" role="tabpanel" hidden>
+      <div class="cards">
+        <article class="gcard bad"><h3>Stop rolling. See a doctor.</h3><ul><li>Pus, yellow crust or hot swollen skin.</li><li>Redness that spreads or lasts more than 2 days.</li><li>Fever after a roll.</li></ul></article>
+        <article class="gcard bad"><h3>Stop minoxidil. See a doctor.</h3><ul><li>Chest pain or fast, pounding heartbeat.</li><li>Dizziness or fainting.</li><li>Swollen hands, feet or ankles. Sudden weight gain.</li></ul></article>
+        <article class="gcard bad"><h3>Tell your doctor (finasteride)</h3><ul><li>Breast lump, pain or discharge.</li><li>Low mood or depression.</li><li>Sexual side effects that do not settle.</li></ul></article>
+      </div>
+      <p class="note">Mild itching, light flaking and pink skin after rolling are common and usually settle. Log them in the day's rating.</p>
+    </div>
+
+    <!-- SOURCES -->
+    <div class="gpane" data-pane="src" role="tabpanel" hidden>
+      <ul class="srcs">
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/23960389/" target="_blank" rel="noopener">Dhurat et al. 2013 · Microneedling in androgenetic alopecia, randomized study</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11582955/" target="_blank" rel="noopener">2024 trial · Microneedling plus minoxidil in Indonesian men</a></li>
+        <li><a href="https://onlinelibrary.wiley.com/doi/10.1111/jocd.16186" target="_blank" rel="noopener">Pei et al. 2024 · Meta-analysis of combined microneedling for AGA</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12883901/" target="_blank" rel="noopener">Review · Microneedling alone or with drugs for AGA</a></li>
+        <li><a href="https://www.mayoclinic.org/drugs-supplements/minoxidil-topical-route/description/drg-20068750" target="_blank" rel="noopener">Mayo Clinic · Topical minoxidil directions</a></li>
+        <li><a href="https://medlineplus.gov/druginfo/meds/a698016.html" target="_blank" rel="noopener">MedlinePlus · Finasteride</a></li>
+        <li><a href="https://miiskin.com/anti-aging-beauty/derma-roller/" target="_blank" rel="noopener">Miiskin · Dermatologist's guide to derma rolling</a></li>
+        <li><a href="https://www.questdiagnostics.com/healthcare-professionals/clinical-education-center/faq/faq202" target="_blank" rel="noopener">Quest Diagnostics · Biotin and lab tests</a></li>
+        <li><a href="https://www.singlecare.com/blog/best-time-to-take-collagen/" target="_blank" rel="noopener">SingleCare · Best time to take collagen</a></li>
+      </ul>
+      <p class="note">This app is a tracker, not medical advice. A dermatologist visit is the best next step for finasteride and for confirming your pattern.</p>
+    </div>
+  </section>
 
   <section class="panel" aria-labelledby="setTitle">
     <h2 id="setTitle">Settings</h2>
@@ -493,7 +871,8 @@ function tasksFor(n, sch){
   const faceRecover = sch.face.has(n-1) || sch.face.has(n-2);
   const lr = lastRollBefore(n, sch);
   const list = [];
-  const add = (slot, c, id, t, h, skip)=>list.push({slot, c, id, t, h, skip:!!skip});
+  const GK = {roll:"scalp", faceRoll:"face", topAM:"minox", topPM:"minox", ana:"minox", tablet:"tabs", collagen:"tabs", fin:"tabs", faceWash:"wash", faceAM:"wash", shave:"shave", buy:"scalp"};
+  const add = (slot, c, id, t, h, skip)=>list.push({slot, c, id, t, h, skip:!!skip, g:GK[id]});
 
   // Morning
   if(isShave){
@@ -579,7 +958,7 @@ function render(){
     if(!items.length) return "";
     return '<div class="slot"><span class="eyebrow">'+sl+'</span>'+items.map(x=>{
       const cls = "c-"+x.c.toLowerCase()+" "+(x.skip ? "task skip" : (done[x.id] ? "task done" : "task"));
-      return '<button class="'+cls+'" data-task="'+x.id+'" '+(x.skip?'aria-disabled="true" tabindex="-1"':'aria-pressed="'+(!!done[x.id])+'"')+'><span class="box"></span><span><span class="t">'+esc(x.t)+'</span><span class="cat">'+esc(x.c)+'</span><br><span class="h">'+esc(x.h)+'</span></span></button>';
+      return '<button class="'+cls+'" data-task="'+x.id+'" '+(x.skip?'aria-disabled="true" tabindex="-1"':'aria-pressed="'+(!!done[x.id])+'"')+'><span class="box"></span><span><span class="t">'+esc(x.t)+'</span><span class="cat">'+esc(x.c)+'</span><br><span class="h">'+esc(x.h)+'</span>'+(x.g && !x.skip ? '<span class="howto" data-guide="'+x.g+'" role="link" tabindex="0">How to ›</span>' : '')+'</span></button>';
     }).join("")+'</div>';
   }).join("");
 
@@ -672,7 +1051,14 @@ function fillSettings(){
 
 /* ---------- events ---------- */
 function rec(){ const k = selKey(); if(!state.days[k]) state.days[k] = {}; return state.days[k]; }
+function openGuide(g){
+  document.querySelectorAll(".gtab").forEach(t=>t.setAttribute("aria-selected", String(t.dataset.g===g)));
+  document.querySelectorAll(".gpane").forEach(p=>{ p.hidden = p.dataset.pane!==g; });
+}
+document.querySelector(".gtabs").addEventListener("click", e=>{ const t = e.target.closest(".gtab"); if(t) openGuide(t.dataset.g); });
 $("tasks").addEventListener("click", e=>{
+  const gl = e.target.closest("[data-guide]");
+  if(gl){ e.preventDefault(); e.stopPropagation(); openGuide(gl.dataset.guide); $("guides").scrollIntoView({behavior:"smooth", block:"start"}); return; }
   const b = e.target.closest("[data-task]"); if(!b || b.classList.contains("skip")) return;
   const r = rec(); r.done = {...(r.done||{})}; r.done[b.dataset.task] = !r.done[b.dataset.task];
   saveDay(selKey()); render();
