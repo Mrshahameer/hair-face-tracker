@@ -750,7 +750,7 @@ create policy &quot;Own rows only&quot; on public.tracker_days
         <label>Email<input id="cEmail" type="email" autocomplete="email"></label>
         <label>Password<input id="cPass" type="password" autocomplete="current-password"></label>
       </div>
-      <div class="actions"><button class="btn primary" id="cIn">Sign in</button><button class="btn" id="cUp">Create account</button></div>
+      <div class="actions"><button class="btn primary" id="cIn">Sign in</button><button class="btn" id="cUp">Create account</button><button class="btn" id="cResend">Resend email</button></div>
     </div>
     <div id="cUser" hidden class="actions">
       <span>Signed in as <b id="cWho"></b></span>
@@ -1145,14 +1145,21 @@ function cloudUI(){
   if(sbUser) $("cWho").textContent = sbUser.email || "Signed in";
   setStatus(!!sbUser, sbUser ? "Synced to cloud" : null);
 }
+function authHashError(){
+  const h = new URLSearchParams((location.hash||"").replace(/^#/,"")), q = new URLSearchParams(location.search);
+  const e = h.get("error_description") || q.get("error_description"); if(!e) return "";
+  history.replaceState(null, "", location.pathname);
+  return /expired|invalid/i.test(e) ? "That confirmation link expired or was already used. Try Sign in. If it says not confirmed, tap Resend email." : e.replace(/\+/g," ");
+}
 function cloudInit(){
+  const hashErr = authHashError();
   const c = cloudCfg();
   $("cUrl").value = c.url; $("cKey").value = c.key;
   if(!c.url || !c.key){ cloudUI(); cloudMsg("Not connected. Add your Supabase details below."); return; }
   if(!window.supabase){ cloudUI(); cloudMsg("Could not load the sync library. Check your internet."); return; }
   try{ sb = window.supabase.createClient(c.url, c.key, {auth:{persistSession:true, autoRefreshToken:true, storageKey:"scalplog-auth"}}); }
   catch(e){ sb = null; cloudUI(); cloudMsg("That URL or key does not look right."); return; }
-  sb.auth.getSession().then(({data})=>{ sbUser = data && data.session ? data.session.user : null; cloudUI(); if(sbUser) cloudPull(); else cloudMsg("Sign in to sync this device."); });
+  sb.auth.getSession().then(({data})=>{ sbUser = data && data.session ? data.session.user : null; cloudUI(); if(sbUser){ cloudPull(); if(/access_token|type=signup/.test(location.hash)) history.replaceState(null,"",location.pathname); } else cloudMsg(hashErr || "Sign in to sync this device."); });
   sb.auth.onAuthStateChange((_e, session)=>{ const was = sbUser; sbUser = session ? session.user : null; cloudUI(); if(sbUser && !was) cloudPull(); });
   document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="visible" && sbUser && Date.now()-lastPull>20000) cloudPull(); });
 }
@@ -1202,12 +1209,18 @@ async function auth(kind){
   const email = $("cEmail").value.trim(), password = $("cPass").value;
   if(!email || password.length<6){ cloudMsg("Enter your email and a password of 6 or more characters."); return; }
   cloudMsg(kind==="up" ? "Creating account..." : "Signing in...");
-  const res = kind==="up" ? await sb.auth.signUp({email, password}) : await sb.auth.signInWithPassword({email, password});
-  if(res.error){ cloudMsg(res.error.message); return; }
+  const res = kind==="up" ? await sb.auth.signUp({email, password, options:{emailRedirectTo: location.origin+location.pathname}}) : await sb.auth.signInWithPassword({email, password});
+  if(res.error){ cloudMsg(/not confirmed/i.test(res.error.message) ? "Email not confirmed yet. Tap Resend email, then open the newest link." : res.error.message); return; }
   if(kind==="up" && !res.data.session){ cloudMsg("Account created. Open the confirmation email, then press Sign in."); return; }
   $("cPass").value = "";
 }
 $("cIn").onclick = ()=>auth("in");
+$("cResend").onclick = async ()=>{
+  if(!sb){ cloudMsg("Connect Supabase first."); return; }
+  const email = $("cEmail").value.trim(); if(!email){ cloudMsg("Type your email first."); return; }
+  const r = await sb.auth.resend({type:"signup", email, options:{emailRedirectTo: location.origin+location.pathname}});
+  cloudMsg(r.error ? r.error.message : "Sent. Open only the newest email, and tap the link once.");
+};
 $("cUp").onclick = ()=>auth("up");
 $("cOut").onclick = async ()=>{ if(sb) await sb.auth.signOut(); sbUser = null; cloudUI(); cloudMsg("Signed out. Your data stays on this device."); };
 $("cSyncNow").onclick = ()=>cloudPull();
