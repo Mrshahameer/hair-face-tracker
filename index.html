@@ -224,6 +224,14 @@ details summary{cursor:pointer;font-weight:600}
 .evidence{margin:0;font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
 .srcs{margin:0;padding-left:18px;display:grid;gap:8px}
 .srcs a{color:var(--teal)}
+.lead{margin:0;font-size:16px}
+.gh{font-family:var(--display);font-size:17px;margin-top:6px}
+.plan-list{list-style:none;margin:0;padding:0;display:grid}
+.plan-list li{display:grid;grid-template-columns:130px minmax(0,1fr);gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.plan-list li:first-child{border-top:0}
+.plan-list .pd{font-family:var(--mono);font-size:12px;color:var(--teal);padding-top:2px}
+.plan-list i{font-style:normal}
+@media (max-width:480px){.plan-list li{grid-template-columns:minmax(0,1fr);gap:2px}}
 .howto{display:inline-block;margin-left:8px;font-family:var(--mono);font-size:11px;color:var(--teal);text-decoration:underline;cursor:pointer}
 .guidelink{color:var(--on-hero);font-family:var(--mono);font-size:12px;text-decoration:underline}
 
@@ -243,7 +251,7 @@ details summary{cursor:pointer;font-weight:600}
     </div>
     <div style="display:grid;gap:6px;justify-items:end">
       <span class="scorechip" id="scoreChip">Score 100</span>
-      <a class="guidelink" href="#guides">How-to guides</a>
+      <a class="guidelink" href="#guides">Your strategy</a>
       <span class="status" id="status"><b></b><span>Saved in this browser</span></span>
       <span class="note mono" id="rangeText"></span>
     </div>
@@ -357,12 +365,13 @@ details summary{cursor:pointer;font-weight:600}
 
   <section class="panel guides" id="guides" aria-labelledby="gTitle">
     <div class="dayhead">
-      <div style="display:grid;gap:4px"><span class="eyebrow">How to do it right</span><h2 id="gTitle">Guides</h2></div>
+      <div style="display:grid;gap:4px"><span class="eyebrow">How to do it right</span><h2 id="gTitle">Strategy and guides</h2></div>
       <span class="note">Based on clinical trials and dermatology guidance</span>
     </div>
     <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" class="hatchline"/></pattern></defs></svg>
     <div class="gtabs" role="tablist" aria-label="Guides">
-      <button role="tab" class="gtab" data-g="scalp" aria-selected="true">Scalp roll</button>
+      <button role="tab" class="gtab" data-g="plan" aria-selected="true">Your strategy</button>
+      <button role="tab" class="gtab" data-g="scalp" aria-selected="false">Scalp roll</button>
       <button role="tab" class="gtab" data-g="face" aria-selected="false">Face roll</button>
       <button role="tab" class="gtab" data-g="tabs" aria-selected="false">Tablets</button>
       <button role="tab" class="gtab" data-g="minox" aria-selected="false">Minoxidil and serum</button>
@@ -372,8 +381,83 @@ details summary{cursor:pointer;font-weight:600}
       <button role="tab" class="gtab" data-g="src" aria-selected="false">Sources</button>
     </div>
 
+    <!-- STRATEGY -->
+    <div class="gpane" data-pane="plan" role="tabpanel">
+      <p class="lead">One plan for 60 days. Hair on your scalp, freshness on your face. Keep it simple and do it every day.</p>
+
+      <h3 class="gh">1. What each product does</h3>
+      <div class="xscroll"><table class="gt">
+        <thead><tr><th>Product</th><th>Its job</th><th>When</th></tr></thead>
+        <tbody>
+          <tr><td><b>Minoxin Plus 5%</b><br><span class="note">minoxidil solution</span></td><td>Main regrowth treatment. Wakes up thinning follicles.</td><td>1ml morning and night</td></tr>
+          <tr><td><b>Hairfin 1mg</b><br><span class="note">finasteride</span></td><td>Blocks DHT, the hormone that shrinks follicles. Protects the hair you have.</td><td>1 tablet each morning</td></tr>
+          <tr><td><b>Roller 1200 head</b></td><td>Makes minoxidil work better on the scalp.</td><td>Friday night</td></tr>
+          <tr><td><b>Roller 720 and 300</b></td><td>Face texture and freshness.</td><td>Tuesday night</td></tr>
+          <tr><td><b>70% alcohol</b></td><td>Keeps the roller clean and safe.</td><td>Before and after every roll</td></tr>
+          <tr><td><b>Face It wash</b></td><td>Controls oil on your face.</td><td>Every night, except around face rolls</td></tr>
+          <tr><td><b>Maxzoom</b></td><td>Fills vitamin and mineral gaps.</td><td>1 after breakfast</td></tr>
+          <tr><td><b>Nutri Collagen</b></td><td>Small support for skin.</td><td>With lunch</td></tr>
+          <tr><td><b>Anagrow serum</b></td><td>Mild cosmetic serum. Minoxidil replaces it.</td><td>Only until minoxidil starts</td></tr>
+          <tr><td><b>Herbal hair oil</b></td><td>Optional. Softens stubble before shaving. It does not regrow hair.</td><td>Shave mornings only</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 class="gh">2. Start dates</h3>
+      <ul class="plan-list">
+        <li><span class="pd">Day 1 · <i data-dday="1"></i></span>Maxzoom, collagen, Anagrow and Face It. Done.</li>
+        <li><span class="pd">Day <i data-sday="minox"></i></span>Minoxidil starts, morning and night. Anagrow stops.</li>
+        <li><span class="pd">Day 5 · <i data-dday="5"></i></span>First scalp roll.</li>
+        <li><span class="pd">Day <i data-sday="fin"></i></span>Hairfin starts. Get a dermatologist's okay first.</li>
+        <li><span class="pd">Day <i data-sday="face"></i></span>First face roll.</li>
+      </ul>
+      <p class="note">One new thing at a time. If something causes a problem, you will know which one.</p>
+
+      <h3 class="gh">3. A normal day</h3>
+      <ul class="plan-list">
+        <li><span class="pd">8:00 am</span>Rinse face with cool water. Breakfast. Maxzoom and Hairfin. Then 1ml minoxidil on a dry scalp. Wash your hands.</li>
+        <li><span class="pd">1:00 pm</span>Lunch with Nutri Collagen.</li>
+        <li><span class="pd">8:00 pm</span>1ml minoxidil. It needs 2 hours to dry before bed.</li>
+        <li><span class="pd">9:30 pm</span>Face It wash. Pat dry.</li>
+        <li><span class="pd">11:00 pm</span>Sleep. 7 to 8 hours is part of the plan.</li>
+      </ul>
+
+      <h3 class="gh">4. The week</h3>
+      <ul class="plan-list">
+        <li><span class="pd">Monday</span>Shave day. Oil the scalp 30 to 60 minutes before if you want. Shave, wash, no morning minoxidil. Night minoxidil if it does not sting.</li>
+        <li><span class="pd">Tuesday</span>Face roll at night. Water only on the face Tuesday night to Thursday. No Face It for those 2 days.</li>
+        <li><span class="pd">Friday</span>Scalp roll at night. No minoxidil Friday night or Saturday morning. Back on Saturday evening.</li>
+        <li><span class="pd">Other days</span>A normal day.</li>
+      </ul>
+
+      <h3 class="gh">5. What to expect</h3>
+      <ul class="plan-list">
+        <li><span class="pd">Weeks 1 to 2</span>No visible change. That is normal.</li>
+        <li><span class="pd">Weeks 2 to 8</span>Extra shedding from minoxidil. Old hairs make way for new ones. Do not stop.</li>
+        <li><span class="pd">Weeks 4 to 8</span>Face less oily and smoother, if you sleep well and roll weekly.</li>
+        <li><span class="pd">Months 3 to 4</span>First new hair at temples and crown in photos.</li>
+        <li><span class="pd">Months 6 to 12</span>Full result. Minoxidil and Hairfin only work while you keep using them.</li>
+      </ul>
+      <div class="callout"><p><b>Honest note.</b> These 60 days build the habit and start the process. Most hair results show after day 60. Keep the routine going after the app ends.</p></div>
+
+      <h3 class="gh">6. Five rules</h3>
+      <ol class="steps">
+        <li>Never roll the scalp within 3 days after a shave.</li>
+        <li>No minoxidil for 24 hours after a scalp roll.</li>
+        <li>Minoxidil only on a dry scalp. Wash your hands after.</li>
+        <li>Missed a tablet? Skip it. Never take two.</li>
+        <li>Photos on day 1, 30 and 60. Same light, same spot.</li>
+      </ol>
+
+      <h3 class="gh">7. See a doctor if</h3>
+      <ul class="plan-list">
+        <li><span class="pd">Minoxidil</span>Chest pain, fast heartbeat, dizziness, or swollen hands or feet.</li>
+        <li><span class="pd">Hairfin</span>Breast lump or pain, low mood, or sexual problems that do not settle.</li>
+        <li><span class="pd">Roller</span>Pus, heat or spreading redness after a roll.</li>
+      </ul>
+    </div>
+
     <!-- SCALP -->
-    <div class="gpane" data-pane="scalp" role="tabpanel">
+    <div class="gpane" data-pane="scalp" role="tabpanel" hidden>
       <div class="facts">
         <div><b>1.0 to 1.5mm</b><span>Once a week</span></div>
         <div><b>0.25 to 0.5mm</b><span>Up to 2 times a week</span></div>
@@ -508,10 +592,10 @@ details summary{cursor:pointer;font-weight:600}
             <g class="ticks">
               <text x="30" y="132">7am</text><text x="105" y="132">9am</text><text x="180" y="132">11am</text><text x="255" y="132">1pm</text><text x="330" y="132">3pm</text><text x="405" y="132">5pm</text><text x="480" y="132">7pm</text><text x="555" y="132">9pm</text><text x="630" y="132">11pm</text>
             </g>
-            <circle cx="68" cy="110" r="7" class="dot supp"/><text x="68" y="92" class="lbl" text-anchor="middle">8:00 Breakfast</text><text x="68" y="76" class="lbl supp-t" text-anchor="middle">Maxzoon</text><text x="68" y="60" class="lbl hair-t" text-anchor="middle">Finasteride</text>
+            <circle cx="68" cy="110" r="7" class="dot supp"/><text x="68" y="92" class="lbl" text-anchor="middle">8:00 Breakfast</text><text x="68" y="76" class="lbl supp-t" text-anchor="middle">Maxzoom</text><text x="68" y="60" class="lbl hair-t" text-anchor="middle">Hairfin</text>
             <circle cx="86" cy="110" r="7" class="dot hair"/><text x="86" y="156" class="lbl hair-t" text-anchor="middle">8:30 Minoxidil</text>
             <circle cx="255" cy="110" r="7" class="dot supp"/><text x="255" y="92" class="lbl" text-anchor="middle">1:00 Lunch</text><text x="255" y="76" class="lbl supp-t" text-anchor="middle">Collagen</text>
-            <circle cx="330" cy="110" r="7" class="dot hair"/><text x="330" y="156" class="lbl hair-t" text-anchor="middle">3:00 Anagrow</text>
+            
             <circle cx="518" cy="110" r="7" class="dot hair"/><text x="518" y="156" class="lbl hair-t" text-anchor="middle">8:00 Minoxidil</text>
             <circle cx="574" cy="110" r="7" class="dot face"/><text x="574" y="92" class="lbl face-t" text-anchor="middle">9:30 Face It</text>
             <circle cx="611" cy="110" r="7" class="dot mute"/><text x="611" y="156" class="lbl mute" text-anchor="middle">10:30 Bed</text>
@@ -521,7 +605,7 @@ details summary{cursor:pointer;font-weight:600}
       </figure>
       <div class="cards">
         <article class="gcard c-supplement">
-          <h3>Maxzoon</h3>
+          <h3>Maxzoom</h3>
           <p class="when">1 tablet · after breakfast</p>
           <ul>
             <li>Food helps absorb vitamins A, D and E and stops nausea.</li>
@@ -539,7 +623,7 @@ details summary{cursor:pointer;font-weight:600}
           </ul>
         </article>
         <article class="gcard c-hair">
-          <h3>Finasteride 1mg</h3>
+          <h3>Hairfin 1mg (finasteride)</h3>
           <p class="when">1 tablet · same time daily</p>
           <ul>
             <li>Only with a dermatologist's prescription.</li>
@@ -579,7 +663,7 @@ details summary{cursor:pointer;font-weight:600}
           <figcaption><span class="key k-drop"></span>Drop points. Total 1ml.</figcaption>
         </figure>
         <div class="gside">
-          <h3>Minoxidil 5%</h3>
+          <h3>Minoxin Plus 5% (minoxidil)</h3>
           <ol class="steps tight">
             <li>Scalp and hair fully dry.</li>
             <li>Fill the dropper to the 1ml line.</li>
@@ -588,11 +672,17 @@ details summary{cursor:pointer;font-weight:600}
             <li>Wash your hands right away.</li>
             <li>Let it dry. No hairdryer. No wash for 4 hours.</li>
           </ol>
-          <h3>Anagrow foam</h3>
+          <h3>Anagrow serum</h3>
           <ol class="steps tight">
-            <li>Once minoxidil starts, use it at 3pm only. Keep 4 hours from minoxidil.</li>
-            <li>Amount as the leaflet says. Massage for 1 minute.</li>
-            <li>Stop it if the scalp itches or flakes.</li>
+            <li>Used only until minoxidil starts. Then it stops.</li>
+            <li>Three scalp products a day means more itching for little gain.</li>
+            <li>Keep the bottle. You can turn it back on in settings.</li>
+          </ol>
+          <h3>Herbal hair oil (optional)</h3>
+          <ol class="steps tight">
+            <li>Shave mornings only. A few drops, massage for 2 minutes.</li>
+            <li>Leave 30 to 60 minutes, then shave and wash it off.</li>
+            <li>Never on roll days, and never on top of minoxidil. Oil blocks it.</li>
           </ol>
         </div>
       </div>
@@ -691,9 +781,10 @@ details summary{cursor:pointer;font-weight:600}
       <label>Start finasteride from day
         <select id="sFin"><option value="0">Not taking finasteride</option></select>
       </label>
-      <label class="toggle"><input type="checkbox" id="sAnagrow"> Keep Anagrow serum in the afternoon after minoxidil starts</label>
+      <label class="toggle"><input type="checkbox" id="sAnagrow"> Keep Anagrow serum at 3pm after minoxidil starts (not needed)</label>
       <label class="toggle"><input type="checkbox" id="sCollagen"> Taking Nutri Collagen</label>
       <label class="toggle"><input type="checkbox" id="sSpf"> I have a sunscreen</label>
+      <label class="toggle"><input type="checkbox" id="sOil"> Use herbal hair oil on shave mornings</label>
     </div>
     <div class="actions">
       <button class="btn primary" id="dlBackup">Download backup file</button>
@@ -767,7 +858,12 @@ create policy &quot;Own rows only&quot; on public.tracker_days
 (function(){
 const DAYS = 60;
 const LS_KEY = "scalplog.v1";
-const DEFAULTS = { start:"2026-09-28", shaveEvery:7, rollWeekday:5, rollFreq:1, faceWeekday:2, faceFrom:9, minoxFrom:15, finFrom:22, anagrow:true, collagen:true, spf:false };
+const DEFAULTS = { start:"2026-09-28", shaveEvery:7, rollWeekday:5, rollFreq:1, faceWeekday:2, faceFrom:9, minoxFrom:3, finFrom:8, anagrow:false, collagen:true, spf:false, oil:true, planVer:2 };
+function migrate(){
+  const st = state.settings; if((st.planVer||1) >= 2) return false;
+  Object.assign(st, {minoxFrom:3, finFrom:8, anagrow:false, oil:true, planVer:2, _ts:Date.now()});
+  return true;
+}
 
 let state = { settings:{...DEFAULTS}, days:{} };
 let selected = null;
@@ -775,7 +871,7 @@ let db = null;
 
 /* ---------- storage ---------- */
 function loadLocal(){
-  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const p = JSON.parse(raw); state.settings = {...DEFAULTS, ...(p.settings||{})}; state.days = p.days||{}; } }catch(e){}
+  try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const p = JSON.parse(raw); state.settings = {...DEFAULTS, ...(p.settings||{})}; if(!p.settings || !p.settings.planVer) state.settings.planVer = 1; state.days = p.days||{}; } }catch(e){}
 }
 function saveLocal(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); }catch(e){} }
 const chains = {};
@@ -795,7 +891,7 @@ async function initDb(){
     setStatus(true);
     let firstS = true, firstD = true;
     db.doc("tracker/settings").onSnapshot(snap=>{
-      if(snap.exists){ state.settings = {...DEFAULTS, ...snap.data()}; saveLocal(); fillSettings(); render(); }
+      if(snap.exists){ const sd = snap.data(); state.settings = {...DEFAULTS, ...sd}; if(!sd.planVer) state.settings.planVer = 1; if(migrate()) saveSettings(); saveLocal(); fillSettings(); render(); }
       else if(firstS){ dbWrite("tracker/settings", state.settings); }
       firstS = false;
     }, ()=>setStatus(false));
@@ -863,7 +959,7 @@ function tasksFor(n, sch){
   const s = state.settings;
   const minox = +s.minoxFrom>0 && n>= +s.minoxFrom;
   const anaPM = minox && s.anagrow;
-  const top = minox ? "Minoxidil 5%" : "Anagrow serum";
+  const top = minox ? "Minoxidil" : "Anagrow serum";
   const isShave = sch.shave.has(n);
   const isRoll = sch.roll.has(n);
   const afterRoll = sch.roll.has(n-1);
@@ -871,18 +967,19 @@ function tasksFor(n, sch){
   const faceRecover = sch.face.has(n-1) || sch.face.has(n-2);
   const lr = lastRollBefore(n, sch);
   const list = [];
-  const GK = {roll:"scalp", faceRoll:"face", topAM:"minox", topPM:"minox", ana:"minox", tablet:"tabs", collagen:"tabs", fin:"tabs", faceWash:"wash", faceAM:"wash", shave:"shave", buy:"scalp"};
+  const GK = {oil:"minox", roll:"scalp", faceRoll:"face", topAM:"minox", topPM:"minox", ana:"minox", tablet:"tabs", collagen:"tabs", fin:"tabs", faceWash:"wash", faceAM:"wash", shave:"shave", buy:"scalp"};
   const add = (slot, c, id, t, h, skip)=>list.push({slot, c, id, t, h, skip:!!skip, g:GK[id]});
 
   // Morning
   if(isShave){
     const h = n===1 ? "Done before starting this log. Tick it." : (lr && n-lr<2 ? "You rolled "+(n-lr)+" day ago. Push the shave 1 day if the scalp is still pink." : "Morning, before any topical. Fresh blade, go with the grain.");
+    if(s.oil && n>1) add("Morning","Hair","oil","Hair oil before shaving","Optional. A few drops, massage 2 minutes, wait 30 to 60 minutes. Then shave and wash it off.");
     add("Morning","Hair","shave","Shave head",h);
   }
   add("Morning","Face","faceAM","Rinse face with cool water","No face wash in the morning. Pat dry with a clean towel.");
   if(s.spf) add("Morning","Face","spf","Sunscreen SPF 30+", isFace||faceRecover ? "Very important today. Rolled skin darkens in sun." : "Face, ears and your shaved scalp if you go out.");
-  add("Morning","Supplement","tablet","Maxzoon tablet","1 tablet after breakfast. Check the label for the dose.");
-  if(+s.finFrom>0 && n>= +s.finFrom) add("Morning","Hair","fin","Finasteride 1mg", n=== +s.finFrom ? "First dose today. Only with a dermatologist's prescription." : "Once a day, same time. Only as prescribed.");
+  add("Morning","Supplement","tablet","Maxzoom tablet","1 tablet after breakfast. Check the label for the dose.");
+  if(+s.finFrom>0 && n>= +s.finFrom) add("Morning","Hair","fin","Hairfin 1mg", n=== +s.finFrom ? "First dose today. Only with a dermatologist's prescription." : "Once a day, same time. Only as prescribed.");
   if(isShave) add("Morning","Hair","topAM",top+" (morning)","Skip today. Fresh shave. Apply tonight only if it does not sting.",true);
   else if(afterRoll) add("Morning","Hair","topAM",top+" (morning)","Skip. Scalp rolled last night. Restart this evening.",true);
   else add("Morning","Hair","topAM",top+" (morning)", minox ? "1ml on a dry scalp, thinning areas. Wash hands after. Keep it off your forehead." : "Dry scalp, thinning areas. Massage for 1 minute.");
@@ -913,7 +1010,7 @@ function tasksFor(n, sch){
   if(n===ROLL_START-1) add("Night","Hair","buy","Get 70% isopropyl alcohol ready","You roll tomorrow. Any pharmacy has it.");
   return list;
 }
-const WEIGHT = { roll:10, faceRoll:6, topAM:5, topPM:5, fin:5, tablet:4, photo:4, collagen:3, ana:3, spf:3, shave:2, faceWash:2, faceAM:1, buy:1 };
+const WEIGHT = { oil:1, roll:10, faceRoll:6, topAM:5, topPM:5, fin:5, tablet:4, photo:4, collagen:3, ana:3, spf:3, shave:2, faceWash:2, faceAM:1, buy:1 };
 function wt(id){ return WEIGHT[id] || 2; }
 function dayScore(n, sch){
   const t = tasksFor(n, sch).filter(x=>!x.skip);
@@ -946,7 +1043,7 @@ function render(){
   if(sch.shave.has(n)) tags.push('<span class="tag">Shave day</span>');
   if(n<ROLL_START) tags.push('<span class="tag warn">Healing. No rolling yet</span>');
   if(+state.settings.minoxFrom===n) tags.push('<span class="tag">Minoxidil starts</span>');
-  if(+state.settings.finFrom===n) tags.push('<span class="tag">Finasteride starts</span>');
+  if(+state.settings.finFrom===n) tags.push('<span class="tag">Hairfin starts</span>');
   $("dayTags").innerHTML = tags.join("");
   $("prevDay").disabled = n<=1; $("nextDay").disabled = n>=DAYS;
 
@@ -987,6 +1084,10 @@ function render(){
   }
   $("cal").innerHTML = cal;
 
+  // strategy dates
+  document.querySelectorAll("[data-dday]").forEach(el=>{ el.textContent = fmt(dateOf(+el.dataset.dday)); });
+  const sdays = {minox:+state.settings.minoxFrom, fin:+state.settings.finFrom, face:+state.settings.faceFrom};
+  document.querySelectorAll("[data-sday]").forEach(el=>{ const v = sdays[el.dataset.sday]; el.textContent = v ? v+" · "+fmt(dateOf(v)) : "not set"; });
   // score
   const upto = Math.max(0, Math.min(DAYS, tn));
   let faceDone=0, faceDue=0, rollsDone=0, rollsDue=0, streak=0, earned=0, possible=0;
@@ -1028,11 +1129,11 @@ function render(){
   const fx = [...sch.face].sort((a,b)=>a-b);
   const fn = +st.finFrom;
   const plan = [
-    ["Day 1", "Start Maxzoon, collagen, Anagrow morning and night, and Face It at night.", "Everything here is gentle. It is safe to start together."],
+    ["Day 1", "Maxzoom, collagen, Anagrow morning and night, and Face It at night.", "Everything here is gentle. It is safe to start together."],
     ["Day "+firstRoll, "First scalp roll. "+fmt(dateOf(firstRoll))+" night.", rolls.length+" scalp rolls across 60 days. Buy 70% alcohol before this."],
     fx.length ? ["Day "+fx[0], "First face roll. "+fmt(dateOf(fx[0]))+" night.", fx.length+" face rolls across 60 days. Check the face head is 0.5mm or shorter."] : ["Face roll", "Not scheduled.", "Pick a start day in settings."],
-    mx ? ["Day "+mx, "Minoxidil 5% morning and night."+(st.anagrow?" Anagrow moves to the afternoon.":" Anagrow stops."), "Extra shedding in weeks 2 to 8 is normal. Do not stop."] : ["Minoxidil", "Not scheduled.", "Pick a start day in settings."],
-    fn ? ["Day "+fn, "Finasteride 1mg daily, only if a dermatologist prescribes it.", "Started 1 week after minoxidil so you can tell which one causes any side effect."] : ["Finasteride", "Not scheduled.", "Needs a prescription first."],
+    mx ? ["Day "+mx, "Minoxin Plus 5%, 1ml morning and night."+(st.anagrow?" Anagrow moves to the afternoon.":" Anagrow stops."), "Extra shedding in weeks 2 to 8 is normal. Do not stop."] : ["Minoxidil", "Not scheduled.", "Pick a start day in settings."],
+    fn ? ["Day "+fn, "Hairfin 1mg every morning, after a dermatologist says yes.", (mx && fn>mx ? "Started "+(fn-mx)+" days after minoxidil, so you can tell which one causes any side effect." : "Start it on its own day if you can.")] : ["Finasteride", "Not scheduled.", "Needs a prescription first."],
     ["Day 30", "Hair and face photos. Compare with day 1.", "Same light, same spot, same angles."],
     ["Day 60", "Final photos and review.", "Hair change shows at 3 to 6 months. Skin looks better in 4 to 8 weeks."]
   ];
@@ -1046,7 +1147,7 @@ function fillSettings(){
   $("sRoll").value = String(s.rollWeekday); $("sRollFreq").value = String(s.rollFreq);
   $("sMinox").value = String(s.minoxFrom); $("sFin").value = String(s.finFrom);
   $("sFaceRoll").value = String(s.faceWeekday); $("sFaceFrom").value = String(s.faceFrom);
-  $("sAnagrow").checked = !!s.anagrow; $("sCollagen").checked = !!s.collagen; $("sSpf").checked = !!s.spf;
+  $("sAnagrow").checked = !!s.anagrow; $("sCollagen").checked = !!s.collagen; $("sSpf").checked = !!s.spf; $("sOil").checked = !!s.oil;
 }
 
 /* ---------- events ---------- */
@@ -1081,15 +1182,15 @@ $("nextDay").onclick = ()=>{ selected = clampN(selected+1); render(); };
 $("todayBtn").onclick = ()=>{ selected = clampN(todayN()); render(); };
 
 function dayOpts(id, from, to){ const el = $(id); for(let d=from; d<=to; d++){ const o = document.createElement("option"); o.value = d; o.textContent = "Day "+d+" · "+fmt(dateOf(d)); el.appendChild(o); } }
-dayOpts("sMinox", 5, 45); dayOpts("sFin", 1, 60); dayOpts("sFaceFrom", 3, 30);
+dayOpts("sMinox", 3, 45); dayOpts("sFin", 1, 60); dayOpts("sFaceFrom", 3, 30);
 $("sFaceFrom").insertAdjacentHTML("afterbegin", '<option value="0">No face rolling</option>');
 function onSet(){
   state.settings = { start: $("sStart").value || DEFAULTS.start, shaveEvery:+$("sShave").value, rollWeekday:+$("sRoll").value, rollFreq:+$("sRollFreq").value,
     faceWeekday:+$("sFaceRoll").value, faceFrom:+$("sFaceFrom").value, minoxFrom:+$("sMinox").value, finFrom:+$("sFin").value,
-    anagrow:$("sAnagrow").checked, collagen:$("sCollagen").checked, spf:$("sSpf").checked };
+    anagrow:$("sAnagrow").checked, collagen:$("sCollagen").checked, spf:$("sSpf").checked, oil:$("sOil").checked, planVer:2 };
   saveSettings(); render();
 }
-["sStart","sShave","sRoll","sRollFreq","sFaceRoll","sFaceFrom","sMinox","sFin","sAnagrow","sCollagen","sSpf"].forEach(id=>$(id).addEventListener("change", onSet));
+["sStart","sShave","sRoll","sRollFreq","sFaceRoll","sFaceFrom","sMinox","sFin","sAnagrow","sCollagen","sSpf","sOil"].forEach(id=>$(id).addEventListener("change", onSet));
 
 $("copyBackup").onclick = ()=>{
   const txt = JSON.stringify(state);
@@ -1172,7 +1273,7 @@ async function cloudPull(){
   const remote = {}; (data||[]).forEach(r=>{ remote[r.day_key] = r.data || {}; });
   const push = [];
   const rs = remote.settings;
-  if(rs && (rs._ts||0) >= (state.settings._ts||0)) state.settings = {...DEFAULTS, ...rs};
+  if(rs && (rs._ts||0) >= (state.settings._ts||0)){ state.settings = {...DEFAULTS, ...rs}; if(!rs.planVer) state.settings.planVer = 1; }
   else if(state.settings._ts) push.push(row("settings", state.settings));
   const keys = new Set([...Object.keys(state.days), ...Object.keys(remote).filter(k=>k!=="settings")]);
   keys.forEach(k=>{
@@ -1180,6 +1281,7 @@ async function cloudPull(){
     if(r && (!l || (r._ts||0) >= (l._ts||0))) state.days[k] = r;
     else if(l) push.push(row(k, l));
   });
+  if(migrate()) push.push(row("settings", state.settings));
   saveLocal(); fillSettings(); render();
   if(push.length){
     const {error:e2} = await sb.from("tracker_days").upsert(push, {onConflict:"user_id,app,day_key"});
@@ -1226,7 +1328,7 @@ $("cOut").onclick = async ()=>{ if(sb) await sb.auth.signOut(); sbUser = null; c
 $("cSyncNow").onclick = ()=>cloudPull();
 $("copySql").onclick = ()=>{ const t = $("sqlBox").textContent; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(()=>cloudMsg("SQL copied."),()=>cloudMsg("Select the SQL text and copy it.")); };
 
-loadLocal(); fillSettings(); render(); initDb(); cloudInit();
+loadLocal(); if(migrate()) saveSettings(); fillSettings(); render(); initDb(); cloudInit();
 })();
 </script>
 
